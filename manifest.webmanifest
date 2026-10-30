@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "ALBA – Przejazdy prywatne",
+  "short_name": "Przejazdy",
+  "description": "Zgłaszanie przejazdów prywatnych samochodem służbowym i rozliczanie paliwa według normy.",
+  "lang": "pl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#002652",
+  "theme_color": "#002652",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
