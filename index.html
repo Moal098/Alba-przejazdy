@@ -287,7 +287,9 @@ function seed(){
       {id:'v1',nr:'SH 4521C',model:'Škoda Octavia 2.0 TDI',spolka:'PTS',paliwo:'ON',norma:5.8,zbiornik:45,garaz:'Chorzów, ul. Bytkowska 15 (baza)'},
       {id:'v2',nr:'SH 7730E',model:'Toyota Corolla 1.8 Hybrid',spolka:'PTS',paliwo:'PB95',norma:4.9,zbiornik:43,garaz:'Bytom (miejsce zamieszkania)'},
       {id:'v3',nr:'SH 3305A',model:'Dacia Duster 1.5 dCi',spolka:'MPGK',paliwo:'ON',norma:6.2,zbiornik:50,garaz:'Chorzów, ul. Bytkowska 15 (baza)'},
-      {id:'v4',nr:'SH 1188F',model:'Škoda Superb 2.0 TSI',spolka:'MPGK',paliwo:'PB95',norma:7.6,zbiornik:66,garaz:'Siemianowice Śląskie (miejsce zamieszkania)'}
+      {id:'v4',nr:'SH 1188F',model:'Škoda Superb 2.0 TSI',spolka:'MPGK',paliwo:'PB95',norma:7.6,zbiornik:66,garaz:'Siemianowice Śląskie (miejsce zamieszkania)'},
+      {id:'v5',nr:'SH 5502K',model:'Škoda Fabia 1.0 TSI',spolka:'PTS',paliwo:'PB95',norma:5.4,zbiornik:40,garaz:'Chorzów, ul. Bytkowska 15 (baza)',typ:'pool',opiekunId:'u4'},
+      {id:'v6',nr:'SH 6019L',model:'Toyota Yaris 1.5 Hybrid',spolka:'MPGK',paliwo:'PB95',norma:4.6,zbiornik:36,garaz:'Chorzów, ul. Bytkowska 15 (baza)',typ:'pool',opiekunId:'u2'}
     ],
     assignments:[
       {userId:'u1',vehicleId:'v1',od:'2026-01-01',do:null},
@@ -305,7 +307,9 @@ function seed(){
       T('t6','2026-10-18','v1','u1',43744,43862,'Chorzów – Częstochowa – Chorzów',58,'Zgłoszony'),
       T('t7','2026-10-11','v2','u2',19540,19688,'Bytom – Ustroń – Bytom',70,'Zgłoszony'),
       T('t8','2026-10-10','v3','u3',31005,31149,'Chorzów – Szczyrk – Chorzów',75,'Zaakceptowany'),
-      T('t9','2026-10-24','v3','u4',31890,32051,'Chorzów – Kraków – Chorzów',74,'Zgłoszony')
+      T('t9','2026-10-24','v3','u4',31890,32051,'Chorzów – Kraków – Chorzów',74,'Zgłoszony'),
+      Object.assign(T('m1','2026-10-17','v2','u2',null,null,'Bytom – Zakopane – Bytom, wg danych GPS',0,'Zaakceptowany'),{km:236,manual:true,source:'GPS / telematyka',addedBy:'a1'}),
+      Object.assign(T('m2','2026-09-26','v1','u1',null,null,'Chorzów – Ustroń – Chorzów, wg karty paliwowej',0,'Rozliczony'),{km:142,manual:true,source:'Karta paliwowa',addedBy:'a1',okres:'2026-10',late:true,status:'Zaakceptowany'})
     ],
     fuels:[
       F('f1','2026-09-08','v1','u1',15,'Rozliczone'),
@@ -325,9 +329,13 @@ function seed(){
       {id:'r0a',okres:'2026-08',vehicleId:'v1',userId:'u1',licznik:40100,date:'2026-08-31'},
       {id:'r0b',okres:'2026-08',vehicleId:'v2',userId:'u2',licznik:17650,date:'2026-08-31'},
       {id:'r0c',okres:'2026-08',vehicleId:'v3',userId:'u3',licznik:29700,date:'2026-09-01'},
+      {id:'r0d',okres:'2026-08',vehicleId:'v5',userId:'u4',licznik:12100,date:'2026-08-31'},
+      {id:'r0e',okres:'2026-08',vehicleId:'v6',userId:'u2',licznik:7650,date:'2026-08-31'},
       {id:'r1',okres:'2026-09',vehicleId:'v1',userId:'u1',licznik:42350,date:'2026-09-30'},
       {id:'r2',okres:'2026-09',vehicleId:'v2',userId:'u2',licznik:18990,date:'2026-09-30'},
-      {id:'r3',okres:'2026-09',vehicleId:'v3',userId:'u3',licznik:30480,date:'2026-10-01'}
+      {id:'r3',okres:'2026-09',vehicleId:'v3',userId:'u3',licznik:30480,date:'2026-10-01'},
+      {id:'r4',okres:'2026-09',vehicleId:'v5',userId:'u4',licznik:12980,date:'2026-09-30'},
+      {id:'r5',okres:'2026-09',vehicleId:'v6',userId:'u2',licznik:8410,date:'2026-10-02',late:false}
     ],
     verif:[
       {okres:'2026-09',vehicleId:'v1',done:true,note:'Zgodne z kartą paliwową.',by:'a1',date:'2026-10-02'},
@@ -369,6 +377,8 @@ const userBy = id => S.users.find(u => u.id === id);
 const veh = id => S.vehicles.find(v => v.id === id);
 const lastDay = p => { const [y,m] = p.split('-').map(Number); return p+'-'+pad(new Date(y,m,0).getDate()); };
 const readingFor = (p,v) => S.readings.find(r => r.okres===p && r.vehicleId===v);
+const poolCars = () => S.vehicles.filter(v => v.typ==='pool');
+const poolOf = userId => poolCars().filter(v => v.opiekunId===userId);
 const me = () => userBy(S.session);
 const initials = n => n.split(' ').map(x=>x[0]).join('').slice(0,2);
 const sum = (a,f) => a.reduce((s,x)=>s+f(x),0);
@@ -434,7 +444,12 @@ function lastOdo(vehicleId, date, all){
 }
 function missingReadings(p){
   const ld = lastDay(p);
-  return S.assignments.filter(a => a.od<=ld && (!a.do || a.do>=ld) && !readingFor(p, a.vehicleId)).map(a => ({u:a.userId, v:a.vehicleId}));
+  return expectedReadings(p).filter(x => !readingFor(p, x.v));
+}
+function expectedReadings(p){
+  const ld = lastDay(p);
+  return S.assignments.filter(a => a.od<=ld && (!a.do || a.do>=ld)).map(a => ({u:a.userId, v:a.vehicleId}))
+    .concat(poolCars().filter(v => v.opiekunId).map(v => ({u:v.opiekunId, v:v.id, pool:true})));
 }
 function readingCheck(vehicleId, p, val){
   const ld = lastDay(p), errs = [];
@@ -510,7 +525,7 @@ function compressImage(file){
 function render(){
   const u = me();
   if(!u){ renderLogin(); $('#modal').innerHTML=''; return; }
-  if(u.role==='admin' && !['admin','dict','report'].includes(U.view)) U.view = 'admin';
+  if(u.role==='admin' && !['admin','dict','report','unrep'].includes(U.view)) U.view = 'admin';
   if(u.role==='driver' && !['home','trip','fuel','hist','odo'].includes(U.view)) U.view = 'home';
   const header = `<header class="top"><div class="top-in"><img src="${LOGO}" alt="ALBA"><div class="ttl">Przejazdy prywatne<small>Prototyp na danych testowych</small></div>
     <button class="me" data-a="account" aria-label="Konto: ${esc(u.name)}"><span class="nm">${esc(u.name)}<small>${u.role==='admin'?'Rozliczający':esc(u.dzial)}</small></span><span class="av">${initials(u.name)}</span></button></div></header>`;
@@ -519,7 +534,7 @@ function render(){
     body = ({home:viewHome, trip:viewTrip, fuel:viewFuel, hist:viewHist, odo:viewOdo})[U.view]();
     body = `<main>${body}</main>` + navBar();
   } else {
-    body = `<main class="wide">${adminTabs()}${U.view==='dict'?viewDict():(U.view==='report'?viewReport():viewAdmin())}</main>`;
+    body = `<main class="wide">${adminTabs()}${U.view==='dict'?viewDict():(U.view==='report'?viewReport():(U.view==='unrep'?viewUnrep():viewAdmin()))}</main>`;
   }
   $('#app').innerHTML = header + body;
   if(U.view==='trip') initTripForm();
@@ -592,6 +607,10 @@ function viewHome(){
       ${c.pending ? `<div class="note">Obejmuje ${c.pending} ${c.pending===1?'wpis oczekujący':'wpisy oczekujące'} na akceptację.</div>` : ''}</div>`;
   }).join('');
   const recent = myEntries(u.id).slice(0,3);
+  const poolCards = poolOf(u.id).map(v => { const lo = lastOdo(v.id, d, true);
+    return `<div class="card"><div class="veh-head"><div><div class="veh-model">${esc(v.model)}</div><div class="muted small">Samochód z puli · jesteś opiekunem i podajesz stan licznika</div></div><span class="plate">${esc(v.nr)}</span></div>
+      <div class="odo-wrap">${odo(lo ? lo.end : null, 'sm')}</div><div class="muted small">${lo ? `Ostatni zapisany stan, ${fDate(lo.date)}` : 'Brak zapisanych odczytów'}</div>
+      ${odoWindow(per(d)) || missingReadings(prevP(per(d))).some(x => x.v===v.id) ? `<div class="veh-acts"><button class="btn btn-ghost btn-sm" data-a="odoGo" data-veh="${v.id}">${I.gauge}Podaj stan na koniec miesiąca</button></div>` : ''}</div>`; }).join('');
   const remind = odoPeriods()
     .flatMap(p => missingReadings(p).filter(x => x.u===u.id).map(x => ({p, v:veh(x.v)})))
     .map(x => {
@@ -601,7 +620,7 @@ function viewHome(){
         : `Podaj stan licznika ${esc(x.v.nr)} na ${fDate(lastDay(x.p))}, termin ${fDate(dl)}.${prev ? ' Jeśli samochód nie był używany od końca miesiąca, podaj jego obecny stan.' : ''}`;
       return `<div class="msg ${late?'err':'warn'} remind"><span>${txt}</span><button class="btn btn-ghost btn-sm" data-a="odoGo" data-p="${x.p}" data-veh="${x.v.id}">Podaj stan</button></div>`;
     }).join('');
-  return `<h1>Dzień dobry, ${esc(first)}</h1>${remind}${vcard}
+  return `<h1>Dzień dobry, ${esc(first)}</h1>${remind}${vcard}${poolCards}
     <div class="big-actions"><button class="btn btn-primary" data-a="go" data-v="trip">${I.car}Zgłoś przejazd</button><button class="btn btn-ghost" data-a="go" data-v="fuel">${I.fuel}Dodaj tankowanie</button></div>
     ${bal ? `<h2>Rozliczenie paliwa</h2>${bal}` : ''}
     <div class="period-h"><h2>Ostatnie wpisy</h2>${recent.length?'<button class="linkbtn small" data-a="go" data-v="hist">Cała historia</button>':''}</div>
@@ -674,10 +693,13 @@ function initTripForm(){
 }
 function fillVeh(pfx){
   const d = $('#'+pfx+'-date').value || today();
-  const vs = vehiclesFor(S.session, d);
+  const vs = vehiclesFor(S.session, d), pool = poolCars();
   const sel = $('#'+pfx+'-veh');
-  sel.innerHTML = vs.length ? vs.map(v => `<option value="${v.id}">${esc(v.nr)} · ${esc(v.model)}</option>`).join('') : '<option value="">brak przydziału</option>';
-  sel.disabled = vs.length < 2;
+  const opt = v => `<option value="${v.id}">${esc(v.nr)} · ${esc(v.model)}</option>`;
+  sel.innerHTML = (vs.length ? `<optgroup label="Przydzielony">${vs.map(opt).join('')}</optgroup>` : '')
+    + (pool.length ? `<optgroup label="Samochody z puli">${pool.map(opt).join('')}</optgroup>` : '')
+    || '<option value="">brak przydziału</option>';
+  sel.disabled = vs.length + pool.length < 2;
 }
 function updateTripForm(){
   const d = $('#t-date').value, vid = $('#t-veh').value, v = veh(vid);
@@ -817,7 +839,7 @@ function viewOdo(){
 }
 function initOdoForm(){
   const fill = () => {
-    const p = $('#o-per').value, vs = vehiclesFor(S.session, lastDay(p)), sel = $('#o-veh'), pv = U.odoPreset && U.odoPreset.v;
+    const p = $('#o-per').value, vs = vehiclesFor(S.session, lastDay(p)).concat(poolOf(S.session)), sel = $('#o-veh'), pv = U.odoPreset && U.odoPreset.v;
     sel.innerHTML = vs.length ? vs.map(v => `<option value="${v.id}" ${v.id===pv?'selected':''}>${esc(v.nr)} · ${esc(v.model)}</option>`).join('') : '<option value="">brak przydziału</option>';
     sel.disabled = vs.length < 2;
     $('#o-day').textContent = fDate(lastDay(p));
@@ -861,7 +883,7 @@ function saveOdo(){
 
 /* ---------- rozliczający ---------- */
 function adminTabs(){
-  return `<div class="tabs" role="tablist"><button role="tab" data-a="go" data-v="admin" aria-selected="${U.view==='admin'}">Rozliczenie miesiąca</button><button role="tab" data-a="go" data-v="report" aria-selected="${U.view==='report'}">Raport pojazdów</button><button role="tab" data-a="go" data-v="dict" aria-selected="${U.view==='dict'}">Samochody i przydziały</button></div>`;
+  return `<div class="tabs" role="tablist"><button role="tab" data-a="go" data-v="admin" aria-selected="${U.view==='admin'}">Rozliczenie miesiąca</button><button role="tab" data-a="go" data-v="report" aria-selected="${U.view==='report'}">Raport pojazdów</button><button role="tab" data-a="go" data-v="unrep" aria-selected="${U.view==='unrep'}">Niezgłoszone przejazdy</button><button role="tab" data-a="go" data-v="dict" aria-selected="${U.view==='dict'}">Samochody i przydziały</button></div>`;
 }
 function periodList(){
   const out = []; let p = FIRST_PERIOD;
@@ -892,12 +914,12 @@ function viewAdmin(){
     ? `<span class="status closed">${I.lock.replace('<svg','<svg width="14" height="14"')}Zamknięty ${fDate(st && st.closedAt)}${st?', '+esc(userBy(st.closedBy).name):''}</span>`
     : `<span class="status open">Otwarty${pend?` · ${pend} do decyzji`:''}</span>`;
   const table = rows.length ? `<div class="tbl-wrap"><table>
-    <thead><tr><th>Użytkownik</th><th>Samochód</th><th class="n">Licznik pocz.</th><th class="n">Licznik końc.</th><th class="n">Stan na koniec mies.</th><th class="n">Km prywatne</th><th class="n">Należne (l)</th><th class="n">Zatankowane (l)</th><th class="n">Przeniesione (l)</th><th class="n">Saldo (l)</th>${closed?'':'<th class="n">Do decyzji</th>'}</tr></thead>
+    <thead><tr><th>Użytkownik</th><th>Samochód</th><th class="n">Licznik pocz.</th><th class="n">Licznik końc.</th><th class="n">Stan na koniec mies.</th><th class="n">Km prywatne</th><th class="n">Udział prywatny</th><th class="n">Należne (l)</th><th class="n">Zatankowane (l)</th><th class="n">Przeniesione (l)</th><th class="n">Saldo (l)</th>${closed?'':'<th class="n">Do decyzji</th>'}</tr></thead>
     <tbody>${rows.map(r => { const v = veh(r.vehicleId);
       return `<tr class="click" data-a="detail" data-u="${r.userId}" data-veh="${r.vehicleId}" tabindex="0"><td><span class="who">${esc(userBy(r.userId).name)}</span></td><td>${esc(v.nr)}<br><span class="muted small">${esc(v.model)}</span></td>
-      <td class="n">${fKm(r.licznikStart)}</td><td class="n">${fKm(r.licznikEnd)}</td><td class="n">${r.licznikMiesiac!=null ? fKm(r.licznikMiesiac) : (!closed && vehiclesFor(r.userId, lastDay(p)).some(x=>x.id===r.vehicleId) ? '<span class="badge">brak</span>' : '—')}</td><td class="n">${fKm(r.km)}</td><td class="n">${fL(r.litryNalezne)}</td><td class="n">${fL(r.litryZatankowane)}</td><td class="n">${fL(r.saldoPrzen)}</td>
+      <td class="n">${fKm(r.licznikStart)}</td><td class="n">${fKm(r.licznikEnd)}</td><td class="n">${r.licznikMiesiac!=null ? fKm(r.licznikMiesiac) : (!closed && expectedReadings(p).some(x=>x.u===r.userId && x.v===r.vehicleId) ? '<span class="badge">brak</span>' : '—')}</td><td class="n">${fKm(r.km)}</td><td class="n">${fPct(pairShare(r.userId, r.vehicleId, p, r.km))}</td><td class="n">${fL(r.litryNalezne)}</td><td class="n">${fL(r.litryZatankowane)}</td><td class="n">${fL(r.saldoPrzen)}</td>
       <td class="n ${r.saldoKon>0.004?'pos':(r.saldoKon<-0.004?'neg':'')}">${fL(r.saldoKon)}</td>${closed?'':`<td class="n">${r.pending?`<span class="badge">${r.pending}</span>`:'—'}</td>`}</tr>`; }).join('')}</tbody></table></div>
-    <div class="note">${closed ? 'Dane zamrożone w chwili zamknięcia okresu.' : 'Liczone wyłącznie z zaakceptowanych wpisów. Saldo dodatnie to litry do zatankowania przez użytkownika, ujemne to nadwyżka przechodząca na kolejny miesiąc.'} Kliknij wiersz, aby zobaczyć wpisy.</div>`
+    <div class="note">${closed ? 'Dane zamrożone w chwili zamknięcia okresu.' : 'Liczone wyłącznie z zaakceptowanych wpisów. Saldo dodatnie to litry do zatankowania przez użytkownika, ujemne to nadwyżka przechodząca na kolejny miesiąc.'} Udział prywatny to km prywatne wobec przebiegu samochodu w miesiącu; nie jest liczony, gdy w miesiącu jeździło nim kilka osób lub to samochód z puli. Kliknij wiersz, aby zobaczyć wpisy.</div>`
     : `<div class="card empty">Brak przejazdów i tankowań w tym okresie.</div>`;
   return `<div class="pbar">
       <div class="pnav"><button data-a="per" data-d="-1" ${i<=0?'disabled':''} aria-label="Poprzedni miesiąc">‹</button><span class="pn">${pName(p)}</span><button data-a="per" data-d="1" ${i>=list.length-1?'disabled':''} aria-label="Następny miesiąc">›</button></div>
@@ -920,7 +942,7 @@ function viewAdmin(){
 function odoInfo(p, closed){
   if(closed && !odoWindow(p)) return '';
   const ld = lastDay(p);
-  const exp = S.assignments.filter(a => a.od<=ld && (!a.do || a.do>=ld));
+  const exp = expectedReadings(p);
   const miss = missingReadings(p);
   const list = miss.map(x => `${veh(x.v).nr} (${userBy(x.u).name})`).join(', ');
   const rd = reminderDate(p), sent = today() >= rd;
@@ -945,11 +967,13 @@ const verifFor = (p, v) => S.verif.find(x => x.okres===p && x.vehicleId===v);
 function vehiclesInPeriod(p){
   const fd = p+'-01', ld = lastDay(p);
   const ids = new Set(S.assignments.filter(a => a.od<=ld && (!a.do || a.do>=fd)).map(a => a.vehicleId));
+  poolCars().forEach(v => ids.add(v.id));
   S.trips.concat(S.fuels, S.readings).forEach(x => { if(x.okres===p) ids.add(x.vehicleId); });
   return [...ids].map(veh).sort((a,b) => a.nr.localeCompare(b.nr));
 }
 function usersOfVehicle(vid, p){
-  const fd = p+'-01', ld = lastDay(p);
+  const fd = p+'-01', ld = lastDay(p), vv = veh(vid);
+  if(vv.typ==='pool') return [{u:null, txt:`pula · opiekun: ${vv.opiekunId ? userBy(vv.opiekunId).name : 'brak'}`}];
   return S.assignments.filter(a => a.vehicleId===vid && a.od<=ld && (!a.do || a.do>=fd)).sort((a,b)=>a.od.localeCompare(b.od))
     .map(a => ({u:userBy(a.userId), txt: userBy(a.userId).name + (a.od>fd ? ` od ${fDate(a.od)}` : '') + (a.do && a.do<ld ? ` do ${fDate(a.do)}` : '')}));
 }
@@ -994,7 +1018,7 @@ function rangeData(){
   const fuels = S.fuels.filter(f => inR(f.date) && ok(f.status)).sort((a,b)=>a.date.localeCompare(b.date));
   const pend = S.trips.concat(S.fuels).filter(x => inR(x.date) && (x.status==='Zgłoszony'||x.status==='Zgłoszone')).length;
   const asg = S.assignments.filter(a => a.od<=to && (!a.do || a.do>=from));
-  const vids = new Set(asg.map(a => a.vehicleId)); trips.concat(fuels).forEach(x => vids.add(x.vehicleId));
+  const vids = new Set(asg.map(a => a.vehicleId)); poolCars().forEach(v => vids.add(v.id)); trips.concat(fuels).forEach(x => vids.add(x.vehicleId));
   const before = addDay(from, -1);
   const vrows = [...vids].map(veh).sort((a,b)=>a.nr.localeCompare(b.nr)).map(v => {
     const tv = trips.filter(t => t.vehicleId===v.id), fv = fuels.filter(f => f.vehicleId===v.id);
@@ -1004,7 +1028,7 @@ function rangeData(){
     return {v, a, b, przebieg, exact: !!(a && b && a.date===before && b.date===to), kmZgl, kmUzup, kmPryw,
       sluzb: przebieg!=null ? przebieg - kmPryw : null, udzial: przebieg ? kmPryw/przebieg : null,
       nal: r2(sum(tv, t => t.km*v.norma/100)), lZgl: r2(sum(fv.filter(f=>!f.manual), f=>f.litry)), lUzup: r2(sum(fv.filter(f=>f.manual), f=>f.litry)),
-      users: asg.filter(x => x.vehicleId===v.id).sort((x,y)=>x.od.localeCompare(y.od)).map(x => userBy(x.userId).name + (x.od>from ? ` od ${fDate(x.od)}` : '') + (x.do && x.do<to ? ` do ${fDate(x.do)}` : ''))};
+      users: v.typ==='pool' ? [`pula · opiekun: ${v.opiekunId ? userBy(v.opiekunId).name : 'brak'}`] : asg.filter(x => x.vehicleId===v.id).sort((x,y)=>x.od.localeCompare(y.od)).map(x => userBy(x.userId).name + (x.od>from ? ` od ${fDate(x.od)}` : '') + (x.do && x.do<to ? ` do ${fDate(x.do)}` : ''))};
   });
   const pk = {};
   trips.concat(fuels).forEach(x => { const k = x.userId+'|'+x.vehicleId; pk[k] = pk[k] || {u:userBy(x.userId), v:veh(x.vehicleId), n:0, km:0, nal:0, zat:0}; });
@@ -1109,7 +1133,7 @@ function modalVeh(m){
   const del = (k,e) => e.manual && !closed ? `<div class="ent-acts"><button class="btn btn-ghost btn-sm" data-a="suppDel" data-k="${k}" data-id="${e.id}">Usuń uzupełnienie</button></div>` : '';
   const tRows = trips.map(e => `<div class="entry"><div class="ico">${I.car}</div><div><div class="t">${esc(e.trasa)}</div><div class="s">${fDate(e.date)} · ${esc(userBy(e.userId).name)}${e.start!=null?` · licznik ${fKm(e.start)}–${fKm(e.end)}`:''}</div>${tag(e)}${e.comment?`<div class="comment">${esc(e.comment)}</div>`:''}${del('trip',e)}</div><div class="r">${fKm(e.km)} km</div></div>`).join('');
   const fRows = fuels.map(e => `<div class="entry"><div class="ico">${I.fuel}</div><div><div class="t">${e.manual ? 'Tankowanie (uzupełnienie)' : 'Tankowanie prywatne'}</div><div class="s">${fDate(e.date)} · ${esc(userBy(e.userId).name)}${e.note?' · '+esc(e.note):''}</div>${tag(e)}${e.comment?`<div class="comment">${esc(e.comment)}</div>`:''}${del('fuel',e)}</div><div class="r">${fL(e.litry)} l</div></div>`).join('');
-  const userOpts = (r.users.length ? r.users.map(x=>x.u) : S.users.filter(u=>u.role==='driver')).filter((u,i,a)=>a.indexOf(u)===i).map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('');
+  const userOpts = (r.users.filter(x=>x.u).length ? r.users.filter(x=>x.u).map(x=>x.u) : S.users.filter(u=>u.role==='driver')).filter((u,i,a)=>a.indexOf(u)===i).map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('');
   const srcOpts = SOURCES.map(x=>`<option>${x}</option>`).join('');
   let supp = '';
   if(!closed){
@@ -1199,11 +1223,127 @@ function exportReport(){
     .catch(err => { if(err && err.code==='declined') return; toast('Nie udało się zapisać pliku.', true); });
 }
 
+function pairShare(u, v, p, km){
+  const vv = veh(v); if(vv.typ==='pool') return null;
+  const us = usersOfVehicle(v, p); if(us.length!==1 || !us[0].u || us[0].u.id!==u) return null;
+  const rs = readingFor(prevP(p), v), re = readingFor(p, v);
+  if(!rs || !re || re.licznik<=rs.licznik) return null;
+  return km / (re.licznik - rs.licznik);
+}
+/* ---------- niezgłoszone przejazdy ---------- */
+function unrepData(){
+  rangeDefaults();
+  const from = U.rfrom, to = U.rto, inR = d => d>=from && d<=to;
+  const ok = x => x.status!=='Odrzucony';
+  const trips = S.trips.filter(t => t.manual && ok(t) && inR(t.date)).sort((a,b)=>a.date.localeCompare(b.date));
+  const allPriv = S.trips.filter(t => ok(t) && inR(t.date));
+  const months = []; for(let p = per(from); p <= per(to); p = nextP(p)){ if(lastDay(p) <= today() || p===per(today())) months.push(p); }
+  const users = S.users.filter(u => u.role==='driver');
+  const rank = users.map(u => {
+    const mine = trips.filter(t => t.userId===u.id);
+    const priv = allPriv.filter(t => t.userId===u.id);
+    const km = sum(mine, t=>t.km), kmAll = sum(priv, t=>t.km);
+    const nal = r2(sum(mine, t => t.km*veh(t.vehicleId).norma/100));
+    const missOdo = months.filter(p => lastDay(p) >= from && lastDay(p) <= to && lastDay(p) < today()).reduce((n,p) => n + missingReadings(p).filter(x=>x.u===u.id).length, 0);
+    const late = S.trips.concat(S.fuels).filter(x => x.userId===u.id && !x.manual && x.late && inR(x.date)).length
+      + S.readings.filter(r => r.userId===u.id && r.late && inR(lastDay(r.okres))).length;
+    const lastBy = {}; myPairsOpen(u).forEach(c => { if(!lastBy[c.vehicleId] || c.okres > lastBy[c.vehicleId].okres) lastBy[c.vehicleId] = c; });
+    const saldo = r2(sum(Object.values(lastBy), c => c.saldoKon > 0 ? c.saldoKon : 0));
+    return {u, n:mine.length, km, nal, kmAll, share: kmAll ? km/kmAll : null, missOdo, late, saldo};
+  }).filter(r => r.n || r.missOdo || r.late)
+    .sort((a,b) => b.km - a.km || b.n - a.n || b.missOdo - a.missOdo || b.late - a.late);
+  return {trips, rank, users};
+}
+function viewUnrep(){
+  rangeDefaults();
+  const bar = `<div class="card" style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end">
+      <div class="field" style="margin:0"><label for="r-from">Od</label><input type="date" id="r-from" value="${U.rfrom}"></div>
+      <div class="field" style="margin:0"><label for="r-to">Do</label><input type="date" id="r-to" value="${U.rto}"></div>
+      <div class="ent-acts" style="margin:0">${[['cur','Bieżący miesiąc'],['prev','Poprzedni miesiąc'],['q','Bieżący kwartał'],['y','Od początku roku']].map(([k,l])=>`<button class="btn btn-ghost btn-sm" data-a="rpre" data-k="${k}">${l}</button>`).join('')}</div>
+      <div style="margin-left:auto" class="ent-acts"><button class="btn btn-primary btn-sm" data-a="addUnrep">${I.car}Dodaj niezgłoszony przejazd</button>${downloads ? `<button class="btn btn-ghost btn-sm" data-a="exportUnrep">${I.xls}Eksportuj do Excela</button>` : ''}</div>
+    </div>`;
+  if(!U.rfrom || !U.rto || U.rfrom > U.rto) return bar + `<div class="msg err">Data „od” musi być wcześniejsza lub równa dacie „do”.</div>`;
+  const d = unrepData();
+  const rankT = d.rank.length ? `<div class="tbl-wrap"><table><thead><tr><th class="n">#</th><th>Użytkownik</th><th class="n">Niezgłoszone przejazdy</th><th class="n">Km niezgłoszone</th><th class="n">Paliwo do zatankowania (l)</th><th class="n">Udział w km prywatnych</th><th class="n">Brak stanu licznika</th><th class="n">Wpisy po terminie</th><th class="n">Bieżące saldo do zatankowania (l)</th></tr></thead><tbody>
+    ${d.rank.map((r,i) => `<tr><td class="n"><b>${i+1}</b></td><td><span class="who">${esc(r.u.name)}</span><br><span class="muted small">${esc(r.u.dzial)}</span></td>
+      <td class="n ${r.n?'hl':''}">${r.n || '—'}</td><td class="n">${r.km ? fKm(r.km) : '—'}</td><td class="n"><b>${r.nal ? fL(r.nal) : '—'}</b></td><td class="n">${fPct(r.share)}</td>
+      <td class="n">${r.missOdo ? `<span class="badge">${r.missOdo}</span>` : '—'}</td><td class="n">${r.late || '—'}</td><td class="n ${r.saldo>0.004?'pos':''}">${fL(r.saldo)}</td></tr>`).join('')}</tbody></table></div>
+    <div class="note">Kolejność: kilometry niezgłoszone, liczba niezgłoszonych przejazdów, brakujące stany licznika i wpisy po terminie. Użytkownicy, którzy rozliczyli wszystko w terminie, nie są pokazani.</div>`
+    : '<div class="card empty">W tym zakresie wszyscy użytkownicy zgłosili przejazdy i podali stany licznika w terminie.</div>';
+  const listT = d.trips.length ? `<div class="tbl-wrap"><table><thead><tr><th>Data</th><th>Użytkownik</th><th>Samochód</th><th>Trasa / opis</th><th class="n">Km</th><th class="n">Norma</th><th class="n">Paliwo do zatankowania (l)</th><th>Źródło</th><th>Rozliczenie</th><th></th></tr></thead><tbody>
+    ${d.trips.map(t => { const v = veh(t.vehicleId), open = !isClosed(t.okres);
+      return `<tr><td>${fDate(t.date)}</td><td>${esc(userBy(t.userId).name)}</td><td>${esc(v.nr)}</td><td>${esc(t.trasa)}${t.start!=null?`<br><span class="muted small">licznik ${fKm(t.start)}–${fKm(t.end)}</span>`:''}</td>
+      <td class="n">${fKm(t.km)}</td><td class="n">${fL(v.norma)}</td><td class="n"><b>${fL(r2(t.km*v.norma/100))}</b></td><td class="small">${esc(t.source||'—')}<br><span class="muted">dodał(a): ${esc(userBy(t.addedBy)?userBy(t.addedBy).name:'—')}</span></td>
+      <td class="small">${pName(t.okres)}${t.late?'<br><span class="muted">dopisany do późniejszego okresu</span>':''}</td>
+      <td>${open ? `<button class="btn btn-ghost btn-sm" data-a="suppDel" data-k="trip" data-id="${t.id}">Usuń</button>` : ''}</td></tr>`; }).join('')}</tbody></table></div>` : '<div class="card empty">Brak niezgłoszonych przejazdów w tym zakresie.</div>';
+  const totKm = sum(d.trips, t=>t.km), totL = r2(sum(d.trips, t => t.km*veh(t.vehicleId).norma/100));
+  return bar + `
+    <div class="kpis">
+      <div class="kpi o"><div class="k">Niezgłoszone przejazdy</div><div class="v">${d.trips.length}</div><div class="sub">dodane przez rozliczającego</div></div>
+      <div class="kpi"><div class="k">Km niezgłoszone</div><div class="v">${fKm(totKm)}</div><div class="sub">${new Set(d.trips.map(t=>t.userId)).size} os.</div></div>
+      <div class="kpi c"><div class="k">Paliwo do zatankowania</div><div class="v">${fL(totL)} l</div><div class="sub">wg norm samochodów</div></div>
+      <div class="kpi g"><div class="k">Udział w km prywatnych</div><div class="v">${fPct((() => { const all = sum(S.trips.filter(t => t.status!=='Odrzucony' && t.date>=U.rfrom && t.date<=U.rto), t=>t.km); return all ? totKm/all : null; })())}</div><div class="sub">niezgłoszone / wszystkie prywatne</div></div>
+    </div>
+    <h2 style="margin-top:0">Ranking osób, które nie rozliczają wszystkich przejazdów</h2>${rankT}
+    <h2>Niezgłoszone przejazdy i paliwo do zatankowania</h2>${listT}
+    <div class="note">Niezgłoszone przejazdy wliczają się do rozliczenia użytkownika jako zaakceptowane i zwiększają jego litry do zatankowania. Przejazd z zamkniętego miesiąca trafia do bieżącego rozliczenia. Udział procentowy widzi tylko rozliczający.</div>`;
+}
+function modalAddUnrep(){
+  const vs = S.vehicles.slice().sort((a,b)=>a.nr.localeCompare(b.nr));
+  const vid = U.addVeh || vs[0].id, date = U.addDate || today();
+  const v = veh(vid);
+  const assigned = S.assignments.filter(a => a.vehicleId===vid && a.od<=date && (!a.do || a.do>=date)).map(a => userBy(a.userId));
+  const users = (assigned.length && v.typ!=='pool' ? assigned : S.users.filter(u=>u.role==='driver'));
+  const o = okresFor(date);
+  return `<button class="x" data-a="mClose" aria-label="Zamknij">×</button>
+    <h3>Dodaj niezgłoszony przejazd prywatny</h3><div class="muted small">Przejazd ustalony przy weryfikacji, którego użytkownik nie zgłosił.</div>
+    <div class="row2"><div class="field"><label for="u-veh">Samochód</label><select id="u-veh">${vs.map(x=>`<option value="${x.id}" ${x.id===vid?'selected':''}>${esc(x.nr)} · ${esc(x.model)}${x.typ==='pool'?' (pula)':''}</option>`).join('')}</select></div>
+      <div class="field"><label for="u-date">Data przejazdu</label><input type="date" id="u-date" value="${date}" max="${today()}"></div></div>
+    <div class="field"><label for="u-user">Użytkownik</label><select id="u-user">${users.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('')}</select>
+      <div class="hint">${v.typ==='pool' ? 'Samochód z puli: wybierz osobę, która nim jechała.' : (assigned.length ? 'Podpowiedź: osoba z przydziałem samochodu w tym dniu.' : 'W tym dniu samochód nie miał przydziału.')}</div></div>
+    <div class="row2"><div class="field"><label for="u-start">Licznik na starcie (opcjonalnie)</label><input type="number" inputmode="numeric" id="u-start"></div><div class="field"><label for="u-end">Licznik na końcu (opcjonalnie)</label><input type="number" inputmode="numeric" id="u-end"></div></div>
+    <div class="field"><label for="u-km">Kilometry</label><input type="number" inputmode="numeric" id="u-km" min="1"><div class="hint">Norma ${fL(v.norma)} l/100 km. Gdy podasz oba stany licznika, kilometry wyliczą się z nich.</div></div>
+    <div class="field"><label for="u-trasa">Trasa lub opis</label><input type="text" id="u-trasa" placeholder="np. Chorzów – Wisła – Chorzów, wg GPS"></div>
+    <div class="field"><label for="u-src">Źródło ustalenia</label><select id="u-src">${SOURCES.map(x=>`<option>${x}</option>`).join('')}</select></div>
+    ${o.late ? `<div class="msg warn">Rozliczenie za ${pName(per(date))} jest zamknięte. Przejazd trafi do rozliczenia za ${pName(o.okres)}.</div>` : ''}
+    <div class="form-actions"><button class="btn btn-ghost" data-a="mClose">Anuluj</button><button class="btn btn-primary" data-a="addUnrepDo">Dodaj przejazd</button></div>`;
+}
+function addUnrep(){
+  const vid = $('#u-veh').value, date = $('#u-date').value, userId = $('#u-user').value, v = veh(vid);
+  if(!date || date > today()){ toast('Podaj datę przejazdu, nie późniejszą niż dziś.', true); return; }
+  const s = parseInt($('#u-start').value,10), e = parseInt($('#u-end').value,10);
+  let km = parseInt($('#u-km').value,10), start = null, end = null;
+  if(isNaN(s) !== isNaN(e)){ toast('Podaj oba stany licznika albo żaden.', true); return; }
+  if(!isNaN(s)){ const errs = tripCheck(vid, date, s, e); if(errs.length){ toast(errs[0], true); return; } start = s; end = e; km = e - s; }
+  if(isNaN(km) || km <= 0){ toast('Podaj liczbę kilometrów.', true); return; }
+  const trasa = $('#u-trasa').value.trim(); if(!trasa){ toast('Wpisz trasę lub opis przejazdu.', true); return; }
+  const o = okresFor(date);
+  S.trips.push({id:uid(), date, vehicleId:vid, userId, start, end, km, trasa, photo:null, okres:o.okres, status:'Zaakceptowany', comment:'', late:o.late, manual:true, source:$('#u-src').value, addedBy:S.session});
+  U.modal = null; U.addVeh = null; U.addDate = null; save(); render();
+  toast(`Dodano przejazd: ${fKm(km)} km, ${fL(r2(km*v.norma/100))} l do zatankowania`);
+}
+function exportUnrep(){
+  if(!window.XLSX){ toast('Nie wczytano biblioteki do eksportu. Sprawdź połączenie i odśwież stronę.', true); return; }
+  const d = unrepData(), zakres = `${U.rfrom} – ${U.rto}`;
+  const a = [['Zakres','Pozycja','Użytkownik','Dział','Niezgłoszone przejazdy','Km niezgłoszone','Paliwo do zatankowania (l)','Udział w km prywatnych (%)','Brak stanu licznika (mies.)','Wpisy po terminie','Bieżące saldo do zatankowania (l)']];
+  d.rank.forEach((r,i) => a.push([zakres, i+1, r.u.name, r.u.dzial, r.n, r.km, r.nal, r.share!=null ? Math.round(r.share*1000)/10 : '', r.missOdo, r.late, r.saldo]));
+  const b = [['Data','Użytkownik','Samochód','Trasa / opis','Licznik start','Licznik koniec','Km','Norma l/100 km','Paliwo do zatankowania (l)','Źródło ustalenia','Dodał','Okres rozliczenia','Status']];
+  d.trips.forEach(t => { const v = veh(t.vehicleId); b.push([t.date, userBy(t.userId).name, v.nr, t.trasa, t.start ?? '', t.end ?? '', t.km, v.norma, r2(t.km*v.norma/100), t.source||'', userBy(t.addedBy)?userBy(t.addedBy).name:'', t.okres, t.status]); });
+  const wb = XLSX.utils.book_new();
+  const add = (aoa, name, w) => { const ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = w.map(x=>({wch:x})); XLSX.utils.book_append_sheet(wb, ws, name); };
+  add(a, 'Ranking', [23,8,20,18,12,12,14,14,14,12,16]);
+  add(b, 'Niezgłoszone przejazdy', [11,20,11,40,12,12,8,12,14,22,18,12,14]);
+  const buf = XLSX.write(wb, {type:'array', bookType:'xlsx'});
+  downloads.save({filename:`ALBA_Niezgloszone_przejazdy_${U.rfrom}_${U.rto}.xlsx`, data:new Blob([buf])})
+    .then(() => toast('Plik zapisany'))
+    .catch(err => { if(err && err.code==='declined') return; toast('Nie udało się zapisać pliku.', true); });
+}
+
 function viewDict(){
-  const vrows = S.vehicles.map(v => `<tr><td><b>${esc(v.nr)}</b></td><td>${esc(v.model)}</td><td>${v.spolka}</td><td>${v.paliwo}</td><td class="n">${fL(v.norma)}</td><td class="n">${v.zbiornik}</td><td>${esc(v.garaz)}</td></tr>`).join('');
+  const vrows = S.vehicles.map(v => `<tr><td><b>${esc(v.nr)}</b></td><td>${esc(v.model)}</td><td>${v.spolka}</td><td>${v.paliwo}</td><td class="n">${fL(v.norma)}</td><td class="n">${v.zbiornik}</td><td>${esc(v.garaz)}</td><td>${v.typ==='pool' ? 'z puli' : 'przydzielony'}</td><td>${v.typ==='pool' && v.opiekunId ? esc(userBy(v.opiekunId).name) : '—'}</td></tr>`).join('');
   const arows = S.assignments.slice().sort((a,b)=>veh(a.vehicleId).nr.localeCompare(veh(b.vehicleId).nr) || a.od.localeCompare(b.od))
     .map(a => `<tr><td><b>${esc(veh(a.vehicleId).nr)}</b></td><td>${esc(userBy(a.userId).name)}</td><td>${fDate(a.od)}</td><td>${a.do?fDate(a.do):'bezterminowo'}</td></tr>`).join('');
-  return `<h2 style="margin-top:0">Samochody</h2><div class="tbl-wrap"><table><thead><tr><th>Nr rej.</th><th>Model</th><th>Spółka</th><th>Paliwo</th><th class="n">Norma l/100 km</th><th class="n">Zbiornik (l)</th><th>Miejsce garażowania</th></tr></thead><tbody>${vrows}</tbody></table></div>
+  return `<h2 style="margin-top:0">Samochody</h2><div class="tbl-wrap"><table><thead><tr><th>Nr rej.</th><th>Model</th><th>Spółka</th><th>Paliwo</th><th class="n">Norma l/100 km</th><th class="n">Zbiornik (l)</th><th>Miejsce garażowania</th><th>Rodzaj</th><th>Opiekun (stan licznika)</th></tr></thead><tbody>${vrows}</tbody></table></div>
     <h2>Przydziały</h2><div class="tbl-wrap"><table><thead><tr><th>Samochód</th><th>Użytkownik</th><th>Od</th><th>Do</th></tr></thead><tbody>${arows}</tbody></table></div>
     <div class="note">W wersji docelowej słowniki edytuje się w listach SharePoint. Prototyp pokazuje je tylko do wglądu.</div>`;
 }
@@ -1217,6 +1357,7 @@ function renderModal(){
   if(m.type==='close') html = modalClose(m);
   if(m.type==='veh') html = modalVeh(m);
   if(m.type==='notif') html = modalNotif();
+  if(m.type==='addUnrep') html = modalAddUnrep();
   if(m.type==='account') html = modalAccount();
   host.innerHTML = `<div class="ov" data-a="ovClose"><div class="modal" role="dialog" aria-modal="true">${html}</div></div>`;
 }
@@ -1295,15 +1436,15 @@ const ACC = {trip:'Zaakceptowany', fuel:'Zaakceptowane'}, REJ = {trip:'Odrzucony
 function exportXlsx(){
   if(!window.XLSX){ toast('Nie wczytano biblioteki do eksportu. Sprawdź połączenie i odśwież stronę.', true); return; }
   const p = U.period, closed = isClosed(p), rows = rowsFor(p);
-  const z = [['Okres','Użytkownik','Samochód','Model','Spółka','Licznik początkowy','Licznik końcowy','Stan licznika na koniec miesiąca','Km prywatne','Norma l/100 km','Litry należne','Litry zatankowane','Saldo przeniesione','Saldo końcowe','Status']];
-  rows.forEach(r => { const v = veh(r.vehicleId); z.push([p, userBy(r.userId).name, v.nr, v.model, v.spolka, r.licznikStart, r.licznikEnd, r.licznikMiesiac, r.km, r.norma, r.litryNalezne, r.litryZatankowane, r.saldoPrzen, r.saldoKon, closed?'Zamknięte':'Wstępne (okres otwarty)']); });
+  const z = [['Okres','Użytkownik','Samochód','Model','Spółka','Licznik początkowy','Licznik końcowy','Stan licznika na koniec miesiąca','Km prywatne','Udział prywatny (%)','Norma l/100 km','Litry należne','Litry zatankowane','Saldo przeniesione','Saldo końcowe','Status']];
+  rows.forEach(r => { const v = veh(r.vehicleId); z.push([p, userBy(r.userId).name, v.nr, v.model, v.spolka, r.licznikStart, r.licznikEnd, r.licznikMiesiac, r.km, (x => x==null ? '' : Math.round(x*1000)/10)(pairShare(r.userId, r.vehicleId, p, r.km)), r.norma, r.litryNalezne, r.litryZatankowane, r.saldoPrzen, r.saldoKon, closed?'Zamknięte':'Wstępne (okres otwarty)']); });
   const t = [['Data','Użytkownik','Samochód','Licznik start','Licznik koniec','Km','Trasa','Litry wg normy','Status','Wpis po terminie','Komentarz','Uzupełnienie rozliczającego']];
   S.trips.filter(x=>x.okres===p).sort((a,b)=>a.date.localeCompare(b.date)).forEach(x => { const v = veh(x.vehicleId); t.push([x.date, userBy(x.userId).name, v.nr, x.start, x.end, x.km, x.trasa, r2(x.km*v.norma/100), x.status, x.late?'tak':'', x.comment, x.manual?(x.source||'tak'):'']); });
   const f = [['Data','Użytkownik','Samochód','Litry','Paragon','Status','Wpis po terminie','Komentarz']];
   S.fuels.filter(x=>x.okres===p).sort((a,b)=>a.date.localeCompare(b.date)).forEach(x => f.push([x.date, userBy(x.userId).name, veh(x.vehicleId).nr, x.litry, x.manual?'uzupełnienie':(x.photo?'tak':'nie'), x.status, x.late?'tak':'', x.comment]));
   const wb = XLSX.utils.book_new();
   const add = (aoa, name, w) => { const ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = w.map(x=>({wch:x})); XLSX.utils.book_append_sheet(wb, ws, name); };
-  add(z, 'Zestawienie', [9,20,11,24,8,14,14,16,11,13,12,15,15,13,22]);
+  add(z, 'Zestawienie', [9,20,11,24,8,14,14,16,11,12,13,12,15,15,13,22]);
   add(t, 'Przejazdy', [11,20,11,12,12,8,34,13,14,14,30,24]);
   add(f, 'Tankowania', [11,20,11,8,9,14,14,30]);
   const ld = lastDay(p), o = [['Samochód','Model','Stan na dzień','Stan licznika (km)','Podał','Data podania']];
@@ -1359,6 +1500,9 @@ document.addEventListener('click', ev => {
     case 'rmode': U.rmode = el.dataset.m; render(); break;
     case 'rpre': rangePreset(el.dataset.k); render(); break;
     case 'exportRange': exportRange(); break;
+    case 'addUnrep': U.addVeh = null; U.addDate = null; U.modal = {type:'addUnrep'}; renderModal(); break;
+    case 'addUnrepDo': addUnrep(); break;
+    case 'exportUnrep': exportUnrep(); break;
     case 'vdetail': U.modal = {type:'veh', v:el.dataset.veh}; U.supp = null; renderModal(); break;
     case 'supp': U.supp = el.dataset.k; renderModal(); { const f = document.querySelector('#modal .supp select, #modal .supp input'); if(f) f.focus(); } break;
     case 'suppCancel': U.supp = null; renderModal(); break;
@@ -1380,6 +1524,9 @@ document.addEventListener('change', ev => {
   if(id==='r-from' && val){ U.rfrom = val; render(); }
   else if(id==='r-to' && val){ U.rto = val; render(); }
   else if(id==='r-st'){ U.rst = val; render(); }
+  else if(id==='u-veh' || id==='u-date'){ if(id==='u-veh') U.addVeh = val; else if(val) U.addDate = val;
+    const keep = ['u-start','u-end','u-km','u-trasa','u-src'].map(k => [k, $('#'+k) ? $('#'+k).value : '']);
+    renderModal(); keep.forEach(([k,v]) => { if($('#'+k)) $('#'+k).value = v; }); }
 });
 document.addEventListener('keydown', ev => {
   if(ev.key==='Escape' && U.modal){ U.modal = null; U.rejecting = null; renderModal(); }
@@ -1387,7 +1534,7 @@ document.addEventListener('keydown', ev => {
 });
 
 /* ---------- PWA ---------- */
-const APP_VERSION = '0.1';
+const APP_VERSION = '0.2';
 async function saveFile({filename, data}){
   const blob = data instanceof Blob ? data : new Blob([data]);
   const file = new File([blob], filename, {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
