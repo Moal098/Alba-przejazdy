@@ -1,11 +1,12 @@
 /* ALBA – Przejazdy prywatne: service worker
    Po każdej zmianie plików aplikacji podnieś numer wersji w CACHE. */
-const CACHE = 'alba-przejazdy-v0.2';
+const CACHE = 'alba-przejazdy-v0.6';
 const ASSETS = ['./', 'index.html', 'manifest.webmanifest', 'xlsx.full.min.js',
   'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+  // cache: 'reload' pomija pamięć podręczną przeglądarki, żeby nowa wersja nie pobrała starych plików
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS.map(u => new Request(u, {cache: 'reload'})))));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys()

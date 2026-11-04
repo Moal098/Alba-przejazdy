@@ -169,7 +169,7 @@ textarea{min-height:70px;resize:vertical}
 .nav button[aria-current="page"] svg{color:var(--cyan)}
 
 /* admin */
-.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px;overflow-x:auto}
+.tabs{display:flex;align-items:center;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px;overflow-x:auto}
 .tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:10px 12px;font-weight:700;color:var(--text2);cursor:pointer;white-space:nowrap}
 .tabs button[aria-selected="true"]{color:var(--text);border-color:var(--cyan)}
 .pbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -256,8 +256,9 @@ td .who{font-weight:700}
 'use strict';
 const LOGO = 'data:image/png;base64,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';
 const KEY = 'alba-przejazdy-proto-v1';
+const SEED_VERSION = 4;
 const MONTHS = ['styczeń','luty','marzec','kwiecień','maj','czerwiec','lipiec','sierpień','wrzesień','październik','listopad','grudzień'];
-const FIRST_PERIOD = '2026-09';
+const FIRST_PERIOD = '2026-07';
 const PROG = 30;
 
 const I = {
@@ -273,86 +274,164 @@ const I = {
 
 /* ---------- dane testowe ---------- */
 function seed(){
-  const T = (id,date,v,u,start,end,trasa,dist,status)=>({id,date,vehicleId:v,userId:u,start,end,km:end-start,trasa,dist,photo:null,okres:date.slice(0,7),status,comment:'',late:false});
-  const F = (id,date,v,u,litry,status)=>({id,date,vehicleId:v,userId:u,litry,photo:'demo',okres:date.slice(0,7),status,comment:'',late:false});
-  return {
-    users:[
-      {id:'u1',name:'Anna Kowalczyk',role:'driver',dzial:'Dział handlowy'},
-      {id:'u2',name:'Tomasz Wróbel',role:'driver',dzial:'Kierownik rejonu'},
-      {id:'u3',name:'Piotr Nowak',role:'driver',dzial:'Dział techniczny'},
-      {id:'u4',name:'Katarzyna Lis',role:'driver',dzial:'Dział logistyki'},
-      {id:'a1',name:'Ewa Zając',role:'admin',dzial:'Rozliczenia floty'}
-    ],
-    vehicles:[
-      {id:'v1',nr:'SH 4521C',model:'Škoda Octavia 2.0 TDI',spolka:'PTS',paliwo:'ON',norma:5.8,zbiornik:45,garaz:'Chorzów, ul. Bytkowska 15 (baza)'},
-      {id:'v2',nr:'SH 7730E',model:'Toyota Corolla 1.8 Hybrid',spolka:'PTS',paliwo:'PB95',norma:4.9,zbiornik:43,garaz:'Bytom (miejsce zamieszkania)'},
-      {id:'v3',nr:'SH 3305A',model:'Dacia Duster 1.5 dCi',spolka:'MPGK',paliwo:'ON',norma:6.2,zbiornik:50,garaz:'Chorzów, ul. Bytkowska 15 (baza)'},
-      {id:'v4',nr:'SH 1188F',model:'Škoda Superb 2.0 TSI',spolka:'MPGK',paliwo:'PB95',norma:7.6,zbiornik:66,garaz:'Siemianowice Śląskie (miejsce zamieszkania)'},
-      {id:'v5',nr:'SH 5502K',model:'Škoda Fabia 1.0 TSI',spolka:'PTS',paliwo:'PB95',norma:5.4,zbiornik:40,garaz:'Chorzów, ul. Bytkowska 15 (baza)',typ:'pool',opiekunId:'u4'},
-      {id:'v6',nr:'SH 6019L',model:'Toyota Yaris 1.5 Hybrid',spolka:'MPGK',paliwo:'PB95',norma:4.6,zbiornik:36,garaz:'Chorzów, ul. Bytkowska 15 (baza)',typ:'pool',opiekunId:'u2'}
-    ],
-    assignments:[
-      {userId:'u1',vehicleId:'v1',od:'2026-01-01',do:null},
-      {userId:'u2',vehicleId:'v2',od:'2026-01-01',do:null},
-      {userId:'u3',vehicleId:'v3',od:'2026-01-01',do:'2026-10-15'},
-      {userId:'u3',vehicleId:'v4',od:'2026-10-16',do:null},
-      {userId:'u4',vehicleId:'v3',od:'2026-10-16',do:null}
-    ],
-    trips:[
-      T('t1','2026-09-06','v1','u1',41210,41498,'Chorzów – Zakopane – Chorzów',128,'Rozliczony'),
-      T('t2','2026-09-20','v1','u1',42015,42131,'Chorzów – Wisła – Chorzów',62,'Rozliczony'),
-      T('t3','2026-09-13','v2','u2',18320,18712,'Bytom – Wrocław – Bytom',175,'Rozliczony'),
-      T('t4','2026-09-27','v3','u3',30110,30262,'Chorzów – Opole – Chorzów',88,'Rozliczony'),
-      T('t5','2026-10-04','v1','u1',43020,43190,'Chorzów – Kraków – Chorzów',72,'Zaakceptowany'),
-      T('t6','2026-10-18','v1','u1',43744,43862,'Chorzów – Częstochowa – Chorzów',58,'Zgłoszony'),
-      T('t7','2026-10-11','v2','u2',19540,19688,'Bytom – Ustroń – Bytom',70,'Zgłoszony'),
-      T('t8','2026-10-10','v3','u3',31005,31149,'Chorzów – Szczyrk – Chorzów',75,'Zaakceptowany'),
-      T('t9','2026-10-24','v3','u4',31890,32051,'Chorzów – Kraków – Chorzów',74,'Zgłoszony'),
-      Object.assign(T('m1','2026-10-17','v2','u2',null,null,'Bytom – Zakopane – Bytom, wg danych GPS',0,'Zaakceptowany'),{km:236,manual:true,source:'GPS / telematyka',addedBy:'a1'}),
-      Object.assign(T('m2','2026-09-26','v1','u1',null,null,'Chorzów – Ustroń – Chorzów, wg karty paliwowej',0,'Rozliczony'),{km:142,manual:true,source:'Karta paliwowa',addedBy:'a1',okres:'2026-10',late:true,status:'Zaakceptowany'})
-    ],
-    fuels:[
-      F('f1','2026-09-08','v1','u1',15,'Rozliczone'),
-      F('f2','2026-09-22','v1','u1',5,'Rozliczone'),
-      F('f3','2026-09-15','v2','u2',21,'Rozliczone'),
-      F('f4','2026-09-28','v3','u3',9.42,'Rozliczone'),
-      F('f5','2026-10-05','v1','u1',12.5,'Zaakceptowane'),
-      F('f6','2026-10-19','v1','u1',8,'Zgłoszone'),
-      F('f7','2026-10-12','v3','u3',8.93,'Zaakceptowane')
-    ],
-    settlements:[
-      {okres:'2026-09',userId:'u1',vehicleId:'v1',licznikStart:41210,licznikEnd:42131,km:404,norma:5.8,litryNalezne:23.43,litryZatankowane:20,saldoPrzen:0,saldoKon:3.43,licznikMiesiac:42350,closedAt:'2026-10-02',closedBy:'a1'},
-      {okres:'2026-09',userId:'u2',vehicleId:'v2',licznikStart:18320,licznikEnd:18712,km:392,norma:4.9,litryNalezne:19.21,litryZatankowane:21,saldoPrzen:0,saldoKon:-1.79,licznikMiesiac:18990,closedAt:'2026-10-02',closedBy:'a1'},
-      {okres:'2026-09',userId:'u3',vehicleId:'v3',licznikStart:30110,licznikEnd:30262,km:152,norma:6.2,litryNalezne:9.42,litryZatankowane:9.42,saldoPrzen:0,saldoKon:0,licznikMiesiac:30480,closedAt:'2026-10-02',closedBy:'a1'}
-    ],
-    readings:[
-      {id:'r0a',okres:'2026-08',vehicleId:'v1',userId:'u1',licznik:40100,date:'2026-08-31'},
-      {id:'r0b',okres:'2026-08',vehicleId:'v2',userId:'u2',licznik:17650,date:'2026-08-31'},
-      {id:'r0c',okres:'2026-08',vehicleId:'v3',userId:'u3',licznik:29700,date:'2026-09-01'},
-      {id:'r0d',okres:'2026-08',vehicleId:'v5',userId:'u4',licznik:12100,date:'2026-08-31'},
-      {id:'r0e',okres:'2026-08',vehicleId:'v6',userId:'u2',licznik:7650,date:'2026-08-31'},
-      {id:'r1',okres:'2026-09',vehicleId:'v1',userId:'u1',licznik:42350,date:'2026-09-30'},
-      {id:'r2',okres:'2026-09',vehicleId:'v2',userId:'u2',licznik:18990,date:'2026-09-30'},
-      {id:'r3',okres:'2026-09',vehicleId:'v3',userId:'u3',licznik:30480,date:'2026-10-01'},
-      {id:'r4',okres:'2026-09',vehicleId:'v5',userId:'u4',licznik:12980,date:'2026-09-30'},
-      {id:'r5',okres:'2026-09',vehicleId:'v6',userId:'u2',licznik:8410,date:'2026-10-02',late:false}
-    ],
-    verif:[
-      {okres:'2026-09',vehicleId:'v1',done:true,note:'Zgodne z kartą paliwową.',by:'a1',date:'2026-10-02'},
-      {okres:'2026-09',vehicleId:'v2',done:true,note:'',by:'a1',date:'2026-10-02'},
-      {okres:'2026-09',vehicleId:'v3',done:true,note:'',by:'a1',date:'2026-10-02'}
-    ],
-    closed:['2026-09'],
-    session:null
+  /* Symulacja: lipiec–wrzesień zamknięte, październik otwarty, listopad bieżący (do 03.11).
+     Liczniki liczone dzień po dniu (jazdy służbowe + prywatne), więc stany, przebiegi i raporty są spójne. */
+  let st = 20261104;
+  const rnd = () => { st |= 0; st = st + 0x6D2B79F5 | 0; let t = Math.imul(st ^ st >>> 15, 1 | st); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const R = (a,b) => a + Math.floor(rnd()*(b-a+1));
+  const pick = a => a[Math.floor(rnd()*a.length)];
+  const p2 = n => String(n).padStart(2,'0');
+  const ldOf = p => { const [y,m] = p.split('-').map(Number); return p+'-'+p2(new Date(y,m,0).getDate()); };
+  const plus = (ds,n) => { const dt = new Date(ds+'T12:00:00Z'); dt.setUTCDate(dt.getUTCDate()+n); return dt.toISOString().slice(0,10); };
+  const rr = n => Math.round((n + Number.EPSILON) * 100) / 100;
+
+  const users = [
+    {id:'u1',name:'Anna Kowalczyk',role:'driver',dzial:'Dział handlowy'},
+    {id:'u2',name:'Tomasz Wróbel',role:'driver',dzial:'Kierownik rejonu'},
+    {id:'u3',name:'Piotr Nowak',role:'driver',dzial:'Dział techniczny'},
+    {id:'u4',name:'Katarzyna Lis',role:'driver',dzial:'Dział logistyki'},
+    {id:'u5',name:'Marek Zieliński',role:'driver',dzial:'Kierownik warsztatu'},
+    {id:'u6',name:'Joanna Mazur',role:'driver',dzial:'Dział BHP'},
+    {id:'u7',name:'Grzegorz Pawlak',role:'driver',dzial:'Kierownik rejonu'},
+    {id:'u8',name:'Monika Dudek',role:'driver',dzial:'Biuro obsługi klienta'},
+    {id:'a1',name:'Ewa Zając',role:'admin',dzial:'Rozliczenia floty'}
+  ];
+  const vehicles = [
+    {id:'v1',nr:'SH 4521C',model:'Škoda Octavia 2.0 TDI',spolka:'PTS',paliwo:'ON',norma:5.8,zbiornik:45,garaz:'Chorzów, ul. Bytkowska 15 (baza)',home:'Chorzów',owner:'u1',odo0:38000,b:[50,110]},
+    {id:'v2',nr:'SH 7730E',model:'Toyota Corolla 1.8 Hybrid',spolka:'PTS',paliwo:'PB95',norma:4.9,zbiornik:43,garaz:'Bytom (miejsce zamieszkania)',home:'Bytom',owner:'u2',odo0:16100,b:[60,130]},
+    {id:'v3',nr:'SH 3305A',model:'Dacia Duster 1.5 dCi',spolka:'MPGK',paliwo:'ON',norma:6.2,zbiornik:50,garaz:'Chorzów, ul. Bytkowska 15 (baza)',home:'Chorzów',owner:'u3',odo0:27900,b:[30,80]},
+    {id:'v4',nr:'SH 1188F',model:'Škoda Superb 2.0 TSI',spolka:'MPGK',paliwo:'PB95',norma:7.6,zbiornik:66,garaz:'Siemianowice Śląskie (miejsce zamieszkania)',home:'Siemianowice Śl.',owner:'u4',odo0:52300,b:[40,90]},
+    {id:'v5',nr:'SH 2047M',model:'Ford Focus kombi 1.5 EcoBlue',spolka:'PTS',paliwo:'ON',norma:5.6,zbiornik:52,garaz:'Gliwice (miejsce zamieszkania)',home:'Gliwice',owner:'u5',odo0:61200,b:[45,95]},
+    {id:'v6',nr:'SH 3912N',model:'Kia Ceed 1.5 T-GDI',spolka:'PTS',paliwo:'PB95',norma:6.4,zbiornik:50,garaz:'Chorzów, ul. Bytkowska 15 (baza)',home:'Chorzów',owner:'u6',odo0:21400,b:[25,70]},
+    {id:'v7',nr:'SH 8130P',model:'Hyundai i30 1.5 DPI',spolka:'MPGK',paliwo:'PB95',norma:6.2,zbiornik:50,garaz:'Ruda Śląska (miejsce zamieszkania)',home:'Ruda Śl.',owner:'u7',odo0:44800,b:[60,140]},
+    {id:'v8',nr:'SH 5276R',model:'Toyota Corolla TS 1.8 Hybrid',spolka:'MPGK',paliwo:'PB95',norma:4.8,zbiornik:43,garaz:'Katowice (miejsce zamieszkania)',home:'Katowice',owner:'u8',odo0:9800,b:[30,75]},
+    {id:'v9',nr:'SH 6019L',model:'Toyota Yaris 1.5 Hybrid',spolka:'MPGK',paliwo:'PB95',norma:4.6,zbiornik:36,garaz:'Chorzów, ul. Bytkowska 15 (baza)',home:'Chorzów',typ:'pool',opiekunId:'u2',owner:'u2',odo0:6900,b:[20,80]},
+    {id:'v10',nr:'SH 5502K',model:'Škoda Fabia 1.0 TSI',spolka:'PTS',paliwo:'PB95',norma:5.4,zbiornik:40,garaz:'Chorzów, ul. Bytkowska 15 (baza)',home:'Chorzów',typ:'pool',opiekunId:'u4',owner:'u4',odo0:11200,b:[20,70]}
+  ];
+  const DEST = [['Kraków',165,75],['Wisła',170,80],['Zakopane',300,130],['Częstochowa',150,70],['Opole',200,95],['Szczyrk',150,72],['Ustroń',140,68],['Wrocław',380,180],['Bielsko-Biała',120,58],['Pszczyna',95,42],['Żywiec',160,76],['Ogrodzieniec',110,52],['Rybnik',100,45],['Łódź',400,190],['Zator (Energylandia)',130,60]];
+  const PROF = { u1:{n:[1,3],cover:1.0}, u2:{n:[1,2],cover:1.0}, u3:{n:[0,2],cover:1.12}, u4:{n:[1,2],cover:1.0},
+                 u5:{n:[2,3],cover:0.9}, u6:{n:[0,1],cover:1.0}, u7:{n:[1,2],cover:0.6}, u8:{n:[1,2],cover:1.0} };
+  /* niezgłoszone przejazdy: [pojazd, miesiąc, źródło, wykryte później (dopisane do października)] */
+  const UNREP = [['v7','2026-07','GPS / telematyka',false],['v7','2026-08','Karta paliwowa',false],['v7','2026-09','GPS / telematyka',true],['v7','2026-10','GPS / telematyka',false],
+                 ['v5','2026-07','Karta paliwowa',false],['v5','2026-09','GPS / telematyka',true],['v5','2026-10','Dokumenty lub oświadczenie',false],
+                 ['v2','2026-08','GPS / telematyka',false],['v9','2026-09','Karta paliwowa',false],['v8','2026-10','GPS / telematyka',false],['v1','2026-08','Karta paliwowa',true]];
+  const MONTHS = ['2026-07','2026-08','2026-09','2026-10','2026-11'], END = '2026-11-03';
+  const MISSING_ODO = {'v3|2026-10':1, 'v7|2026-10':1};
+  const LATE_ODO = {'v5|2026-10':'2026-11-04', 'v7|2026-08':'2026-09-07'};
+  const isWd = ds => { const wd = new Date(ds+'T12:00:00Z').getUTCDay(); return wd!==0 && wd!==6 && !holidays(+ds.slice(0,4)).has(ds); };
+
+  const trips = [], fuels = [], readings = [], verif = [];
+  let n = 0;
+  const id = p => p + (++n);
+  vehicles.forEach(v => {
+    let odo = v.odo0;
+    readings.push({id:id('r'), okres:'2026-06', vehicleId:v.id, userId:v.owner, licznik:odo, date:'2026-06-30'});
+    MONTHS.forEach(p => {
+      const last = p===MONTHS[MONTHS.length-1] ? END : ldOf(p), days = Number(last.slice(8));
+      const plan = {};
+      if(v.typ!=='pool'){
+        const pr = PROF[v.owner];
+        let cnt = p===MONTHS[MONTHS.length-1] ? R(0,1) : R(pr.n[0], pr.n[1]);
+        for(let i=0; i<cnt; i++){ const d = R(1, days); if(!plan[d]) plan[d] = {rep:true}; }
+      }
+      UNREP.filter(u => u[0]===v.id && u[1]===p).forEach(u => { let d = R(2, days-1); while(plan[d]) d = (d % days) + 1; plan[d] = {rep:false, src:u[2], late:u[3]}; });
+      const mTrips = [];
+      for(let d=1; d<=days; d++){
+        const ds = p+'-'+p2(d);
+        if(v.typ==='pool' ? (isWd(ds) && rnd()<0.55) : isWd(ds)) odo += R(v.b[0], v.b[1]);
+        if(plan[d]){
+          const ds2 = pick(DEST), km = Math.round(ds2[1] * (0.92 + rnd()*0.18)), start = odo;
+          odo += km;
+          mTrips.push({...plan[d], date:ds, start, end:odo, km, trasa:`${v.home} – ${ds2[0]} – ${v.home}`, dist:ds2[2]});
+          odo += isWd(ds) ? R(5, 30) : 0;
+        }
+      }
+      let nal = 0;
+      mTrips.forEach(t => {
+        if(t.rep){
+          let okres = p, late = false, status = p==='2026-11' ? 'Zgłoszony' : (p==='2026-10' && rnd()<0.3 ? 'Zgłoszony' : 'Zaakceptowany');
+          if(v.owner==='u7' && p==='2026-09' && !trips.some(x => x.userId==='u7' && x.late && !x.manual)){ okres = '2026-10'; late = true; status = 'Zgłoszony'; }
+          trips.push({id:id('t'), date:t.date, vehicleId:v.id, userId:v.owner, start:t.start, end:t.end, km:t.km, trasa:t.trasa, dist:t.dist, photo:null, okres, status, comment:'', late});
+          if(okres===p) nal += t.km * v.norma / 100;
+        } else {
+          const gps = t.src==='GPS / telematyka';
+          trips.push({id:id('m'), date:t.date, vehicleId:v.id, userId:v.owner, start:gps?t.start:null, end:gps?t.end:null, km:t.km,
+            trasa:`${t.trasa}, ${gps ? 'wg danych GPS' : (t.src==='Karta paliwowa' ? 'wg transakcji na karcie paliwowej' : 'wg oświadczenia')}`,
+            photo:null, okres: t.late ? '2026-10' : p, status:'Zaakceptowany', comment:'', late:t.late, manual:true, source:t.src, addedBy:'a1'});
+        }
+      });
+      if(nal > 0 && p !== '2026-11'){
+        const total = rr(nal * PROF[v.owner].cover), parts = total > 18 ? 2 : 1;
+        const lastTrip = mTrips.filter(t=>t.rep).map(t=>Number(t.date.slice(8))).pop() || 1;
+        for(let i=0; i<parts; i++){
+          const l = i===parts-1 ? rr(total - (parts>1 ? rr(total/2) : 0)) : rr(total/2);
+          const d = Math.min(days, lastTrip + R(1, 4) + i*3);
+          fuels.push({id:id('f'), date:p+'-'+p2(d), vehicleId:v.id, userId:v.owner, litry:l, photo:'demo', okres:p,
+            status: p==='2026-10' && rnd()<0.3 ? 'Zgłoszone' : 'Zaakceptowane', comment:'', late:false});
+        }
+      }
+      if(p !== '2026-11' && !MISSING_ODO[v.id+'|'+p]){
+        const lateD = LATE_ODO[v.id+'|'+p];
+        readings.push({id:id('r'), okres:p, vehicleId:v.id, userId:v.owner, licznik:odo, date: lateD || plus(ldOf(p), R(0,1)), late:!!lateD});
+      }
+    });
+  });
+  /* przykładowe odrzucenia */
+  const fj = fuels.find(f => f.userId==='u6' && f.okres==='2026-08');
+  if(fj){ fj.status = 'Odrzucone'; fj.comment = 'Paragon nieczytelny – brak widocznej liczby litrów. Dodaj ponownie wyraźne zdjęcie.'; }
+  const fo = fuels.find(f => f.userId==='u7' && f.okres==='2026-10');
+  if(fo){ fo.status = 'Odrzucone'; fo.comment = 'Data na paragonie nie zgadza się z datą tankowania.'; }
+
+  ['2026-07','2026-08','2026-09'].forEach(p => vehicles.forEach(v => verif.push({okres:p, vehicleId:v.id, done:true, note: v.id==='v7' ? 'Rozbieżność z GPS – dodano niezgłoszony przejazd.' : '', by:'a1', date:plus(ldOf(p), 3)})));
+  ['v1','v2','v4','v6','v9'].forEach(vid => verif.push({okres:'2026-10', vehicleId:vid, done:true, note:'', by:'a1', date:'2026-11-03'}));
+
+  const data = {
+    users,
+    vehicles: vehicles.map(({home, owner, odo0, b, ...v}) => v),
+    assignments: vehicles.filter(v => v.typ!=='pool').map(v => ({userId:v.owner, vehicleId:v.id, od:'2026-01-01', do:null})),
+    trips, fuels, readings, verif, settlements:[], closed:['2026-06'], session:null, seedVersion:SEED_VERSION
   };
+  /* zamknięcie lipca, sierpnia i września tą samą logiką co w aplikacji */
+  const prev = S; S = data;
+  [['2026-07','2026-08-04'],['2026-08','2026-09-03'],['2026-09','2026-10-05']].forEach(([p, d]) => closePeriodFn(p, 'a1', d));
+  S = prev;
+  return data;
+}
+function closePeriodFn(p, by, date){
+  rowsFor(p).forEach(r => S.settlements.push({okres:p, userId:r.userId, vehicleId:r.vehicleId, licznikStart:r.licznikStart, licznikEnd:r.licznikEnd, licznikMiesiac:r.licznikMiesiac, km:r.km, norma:r.norma, litryNalezne:r.litryNalezne, litryZatankowane:r.litryZatankowane, saldoPrzen:r.saldoPrzen, saldoKon:r.saldoKon, closedAt:date, closedBy:by}));
+  S.trips.forEach(x => { if(x.okres===p && x.status==='Zaakceptowany') x.status = 'Rozliczony'; });
+  S.fuels.forEach(x => { if(x.okres===p && x.status==='Zaakceptowane') x.status = 'Rozliczone'; });
+  S.closed.push(p);
 }
 
-let S = load();
+let S = null;
 const U = {view:'home', period:null, modal:null, rejecting:null, expanded:null, photo:null, startTouched:false, loginOpen:false};
 let downloads = null;
 
+/* Dopisuje do zapisanych danych nowe elementy przykładowe (samochody z puli, odczyty, przejazdy) bez kasowania wpisów użytkownika */
+function migrate(d){
+  if((d.seedVersion || 1) >= SEED_VERSION) return d;
+  if((d.seedVersion || 1) < 4){
+    const fresh = seed();
+    fresh.session = d.session && fresh.users.some(u => u.id===d.session) ? d.session : null;
+    try{ localStorage.setItem(KEY, JSON.stringify(fresh)); }catch(e){}
+    return fresh;
+  }
+  const sd = seed();
+  const NEW = {vehicles:['v5','v6'], readings:['r0a','r0b','r0c','r0d','r0e','r1','r2','r3','r4','r5'], trips:['m1','m2']};
+  Object.keys(NEW).forEach(k => {
+    d[k] = d[k] || [];
+    const ids = new Set(d[k].map(x => x.id));
+    sd[k].forEach(x => { if(NEW[k].includes(x.id) && !ids.has(x.id) && !(k==='readings' && d.readings.some(r => r.okres===x.okres && r.vehicleId===x.vehicleId))) d[k].push(x); });
+  });
+  d.verif = d.verif || [];
+  sd.verif.forEach(x => { if(!d.verif.some(y => y.okres===x.okres && y.vehicleId===x.vehicleId)) d.verif.push(x); });
+  d.seedVersion = SEED_VERSION;
+  try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){}
+  return d;
+}
 function load(){
-  try{ const r = localStorage.getItem(KEY); if(r){ const d = JSON.parse(r); if(d && d.users){ if(!d.readings) d.readings = []; if(!d.verif) d.verif = []; return d; } } }catch(e){}
+  try{ const r = localStorage.getItem(KEY); if(r){ const d = JSON.parse(r); if(d && d.users){ if(!d.readings) d.readings = []; if(!d.verif) d.verif = []; return migrate(d); } } }catch(e){}
   return seed();
 }
 function save(){
@@ -601,6 +680,7 @@ function viewHome(){
       <div class="bal">
         <span>Przeniesione z poprzedniego miesiąca</span><span class="num">${fL(c.saldoPrzen)} l</span>
         <span>Należne wg normy (${fKm(c.km)} km)</span><span class="num">+ ${fL(c.litryNalezne)} l</span>
+        ${(x => x ? `<span class="muted small">w tym przejazdy uzupełnione przez rozliczającego</span><span class="num muted small">${fL(x)} l</span>` : '')(r2(sum(c.allT.filter(t => t.manual && t.status!=='Odrzucony'), t => t.km) * veh(c.vehicleId).norma / 100))}
         <span>Zatankowane prywatnie</span><span class="num">− ${fL(c.litryZatankowane)} l</span>
       </div>
       <div class="verdict ${due?'due':'ok'}"><span>${due?'Do zatankowania':(c.saldoKon < -0.004?'Nadwyżka na kolejny miesiąc':'Bilans wyrównany')}</span><span class="v">${fL(Math.abs(c.saldoKon))} l</span></div>
@@ -693,7 +773,7 @@ function initTripForm(){
 }
 function fillVeh(pfx){
   const d = $('#'+pfx+'-date').value || today();
-  const vs = vehiclesFor(S.session, d), pool = poolCars();
+  const vs = vehiclesFor(S.session, d), pool = poolOf(S.session);
   const sel = $('#'+pfx+'-veh');
   const opt = v => `<option value="${v.id}">${esc(v.nr)} · ${esc(v.model)}</option>`;
   sel.innerHTML = (vs.length ? `<optgroup label="Przydzielony">${vs.map(opt).join('')}</optgroup>` : '')
@@ -883,7 +963,7 @@ function saveOdo(){
 
 /* ---------- rozliczający ---------- */
 function adminTabs(){
-  return `<div class="tabs" role="tablist"><button role="tab" data-a="go" data-v="admin" aria-selected="${U.view==='admin'}">Rozliczenie miesiąca</button><button role="tab" data-a="go" data-v="report" aria-selected="${U.view==='report'}">Raport pojazdów</button><button role="tab" data-a="go" data-v="unrep" aria-selected="${U.view==='unrep'}">Niezgłoszone przejazdy</button><button role="tab" data-a="go" data-v="dict" aria-selected="${U.view==='dict'}">Samochody i przydziały</button></div>`;
+  return `<div class="tabs" role="tablist"><button role="tab" data-a="go" data-v="admin" aria-selected="${U.view==='admin'}">Rozliczenie miesiąca</button><button role="tab" data-a="go" data-v="report" aria-selected="${U.view==='report'}">Raport pojazdów</button><button role="tab" data-a="go" data-v="unrep" aria-selected="${U.view==='unrep'}">Niezgłoszone przejazdy</button><button role="tab" data-a="go" data-v="dict" aria-selected="${U.view==='dict'}">Samochody i przydziały</button>${downloads ? `<button class="btn btn-primary btn-sm" data-a="exportAllAsk" style="margin:4px 0 4px auto;white-space:nowrap">${I.xls}Raport zbiorczy (Excel)</button>` : ''}</div>`;
 }
 function periodList(){
   const out = []; let p = FIRST_PERIOD;
@@ -914,18 +994,17 @@ function viewAdmin(){
     ? `<span class="status closed">${I.lock.replace('<svg','<svg width="14" height="14"')}Zamknięty ${fDate(st && st.closedAt)}${st?', '+esc(userBy(st.closedBy).name):''}</span>`
     : `<span class="status open">Otwarty${pend?` · ${pend} do decyzji`:''}</span>`;
   const table = rows.length ? `<div class="tbl-wrap"><table>
-    <thead><tr><th>Użytkownik</th><th>Samochód</th><th class="n">Licznik pocz.</th><th class="n">Licznik końc.</th><th class="n">Stan na koniec mies.</th><th class="n">Km prywatne</th><th class="n">Udział prywatny</th><th class="n">Należne (l)</th><th class="n">Zatankowane (l)</th><th class="n">Przeniesione (l)</th><th class="n">Saldo (l)</th>${closed?'':'<th class="n">Do decyzji</th>'}</tr></thead>
+    <thead><tr><th>Użytkownik</th><th>Samochód</th><th class="n">Licznik pocz.</th><th class="n">Licznik końc.</th><th class="n">Stan na koniec mies.</th><th class="n">Km prywatne</th><th class="n">Udział prywatny</th><th class="n">Należne (l)</th><th class="n">w tym za uzup. (l)</th><th class="n">Zatankowane (l)</th><th class="n">Przeniesione (l)</th><th class="n">Saldo (l)</th>${closed?'':'<th class="n">Do decyzji</th>'}</tr></thead>
     <tbody>${rows.map(r => { const v = veh(r.vehicleId);
       return `<tr class="click" data-a="detail" data-u="${r.userId}" data-veh="${r.vehicleId}" tabindex="0"><td><span class="who">${esc(userBy(r.userId).name)}</span></td><td>${esc(v.nr)}<br><span class="muted small">${esc(v.model)}</span></td>
-      <td class="n">${fKm(r.licznikStart)}</td><td class="n">${fKm(r.licznikEnd)}</td><td class="n">${r.licznikMiesiac!=null ? fKm(r.licznikMiesiac) : (!closed && expectedReadings(p).some(x=>x.u===r.userId && x.v===r.vehicleId) ? '<span class="badge">brak</span>' : '—')}</td><td class="n">${fKm(r.km)}</td><td class="n">${fPct(pairShare(r.userId, r.vehicleId, p, r.km))}</td><td class="n">${fL(r.litryNalezne)}</td><td class="n">${fL(r.litryZatankowane)}</td><td class="n">${fL(r.saldoPrzen)}</td>
+      <td class="n">${fKm(r.licznikStart)}</td><td class="n">${fKm(r.licznikEnd)}</td><td class="n">${r.licznikMiesiac!=null ? fKm(r.licznikMiesiac) : (!closed && expectedReadings(p).some(x=>x.u===r.userId && x.v===r.vehicleId) ? '<span class="badge">brak</span>' : '—')}</td><td class="n">${fKm(r.km)}</td><td class="n">${fPct(pairShare(r.userId, r.vehicleId, p, r.km))}</td><td class="n">${fL(r.litryNalezne)}</td><td class="n">${(x => x ? '<b>'+fL(x)+'</b>' : '—')(uzupL(r.userId, r.vehicleId, p, r.norma))}</td><td class="n">${fL(r.litryZatankowane)}</td><td class="n">${fL(r.saldoPrzen)}</td>
       <td class="n ${r.saldoKon>0.004?'pos':(r.saldoKon<-0.004?'neg':'')}">${fL(r.saldoKon)}</td>${closed?'':`<td class="n">${r.pending?`<span class="badge">${r.pending}</span>`:'—'}</td>`}</tr>`; }).join('')}</tbody></table></div>
-    <div class="note">${closed ? 'Dane zamrożone w chwili zamknięcia okresu.' : 'Liczone wyłącznie z zaakceptowanych wpisów. Saldo dodatnie to litry do zatankowania przez użytkownika, ujemne to nadwyżka przechodząca na kolejny miesiąc.'} Udział prywatny to km prywatne wobec przebiegu samochodu w miesiącu; nie jest liczony, gdy w miesiącu jeździło nim kilka osób lub to samochód z puli. Kliknij wiersz, aby zobaczyć wpisy.</div>`
+    <div class="note">${closed ? 'Dane zamrożone w chwili zamknięcia okresu.' : 'Liczone wyłącznie z zaakceptowanych wpisów. Saldo dodatnie to litry do zatankowania przez użytkownika, ujemne to nadwyżka przechodząca na kolejny miesiąc.'} Udział prywatny to km prywatne wobec przebiegu samochodu w miesiącu; nie jest liczony, gdy w miesiącu jeździło nim kilka osób albo brakuje stanu licznika. Kliknij wiersz, aby zobaczyć wpisy.</div>`
     : `<div class="card empty">Brak przejazdów i tankowań w tym okresie.</div>`;
   return `<div class="pbar">
       <div class="pnav"><button data-a="per" data-d="-1" ${i<=0?'disabled':''} aria-label="Poprzedni miesiąc">‹</button><span class="pn">${pName(p)}</span><button data-a="per" data-d="1" ${i>=list.length-1?'disabled':''} aria-label="Następny miesiąc">›</button></div>
       ${status}
       <div class="acts">
-        ${downloads ? `<button class="btn btn-ghost btn-sm" data-a="export">${I.xls}Eksportuj do Excela</button>` : ''}
         ${canClose ? `<button class="btn btn-primary btn-sm" data-a="closeAsk">${I.lock}Zamknij okres</button>` : ''}
       </div></div>
     <div class="kpis">
@@ -973,7 +1052,7 @@ function vehiclesInPeriod(p){
 }
 function usersOfVehicle(vid, p){
   const fd = p+'-01', ld = lastDay(p), vv = veh(vid);
-  if(vv.typ==='pool') return [{u:null, txt:`pula · opiekun: ${vv.opiekunId ? userBy(vv.opiekunId).name : 'brak'}`}];
+  if(vv.typ==='pool') return vv.opiekunId ? [{u:userBy(vv.opiekunId), txt:`${userBy(vv.opiekunId).name} (opiekun, auto z puli)`}] : [];
   return S.assignments.filter(a => a.vehicleId===vid && a.od<=ld && (!a.do || a.do>=fd)).sort((a,b)=>a.od.localeCompare(b.od))
     .map(a => ({u:userBy(a.userId), txt: userBy(a.userId).name + (a.od>fd ? ` od ${fDate(a.od)}` : '') + (a.do && a.do<ld ? ` do ${fDate(a.do)}` : '')}));
 }
@@ -988,7 +1067,7 @@ function vehReport(vid, p){
   const przebieg = (start!=null && end!=null) ? end - start : null;
   const kmPryw = kmZgl + kmUzup;
   return {v, start, end, przebieg, kmZgl, kmUzup, kmPryw, sluzb: przebieg!=null ? przebieg - kmPryw : null,
-    udzial: przebieg ? kmPryw / przebieg : null, nal: r2(kmPryw * v.norma / 100), lZgl, lUzup, lRazem: r2(lZgl + lUzup),
+    udzial: przebieg ? kmPryw / przebieg : null, nal: r2(kmPryw * v.norma / 100), nalZgl: r2(kmZgl * v.norma / 100), nalUzup: r2(kmUzup * v.norma / 100), lZgl, lUzup, lRazem: r2(lZgl + lUzup),
     ver: verifFor(p, vid), users: usersOfVehicle(vid, p)};
 }
 const fPct = x => x==null ? '—' : (x*100).toLocaleString('pl-PL',{maximumFractionDigits:1}) + '%';
@@ -1027,8 +1106,8 @@ function rangeData(){
     const kmZgl = sum(tv.filter(t=>!t.manual), t=>t.km), kmUzup = sum(tv.filter(t=>t.manual), t=>t.km), kmPryw = kmZgl + kmUzup;
     return {v, a, b, przebieg, exact: !!(a && b && a.date===before && b.date===to), kmZgl, kmUzup, kmPryw,
       sluzb: przebieg!=null ? przebieg - kmPryw : null, udzial: przebieg ? kmPryw/przebieg : null,
-      nal: r2(sum(tv, t => t.km*v.norma/100)), lZgl: r2(sum(fv.filter(f=>!f.manual), f=>f.litry)), lUzup: r2(sum(fv.filter(f=>f.manual), f=>f.litry)),
-      users: v.typ==='pool' ? [`pula · opiekun: ${v.opiekunId ? userBy(v.opiekunId).name : 'brak'}`] : asg.filter(x => x.vehicleId===v.id).sort((x,y)=>x.od.localeCompare(y.od)).map(x => userBy(x.userId).name + (x.od>from ? ` od ${fDate(x.od)}` : '') + (x.do && x.do<to ? ` do ${fDate(x.do)}` : ''))};
+      nal: r2(sum(tv, t => t.km*v.norma/100)), nalUzup: r2(kmUzup*v.norma/100), lZgl: r2(sum(fv.filter(f=>!f.manual), f=>f.litry)), lUzup: r2(sum(fv.filter(f=>f.manual), f=>f.litry)),
+      users: v.typ==='pool' ? (v.opiekunId ? [`${userBy(v.opiekunId).name} (opiekun, auto z puli)`] : []) : asg.filter(x => x.vehicleId===v.id).sort((x,y)=>x.od.localeCompare(y.od)).map(x => userBy(x.userId).name + (x.od>from ? ` od ${fDate(x.od)}` : '') + (x.do && x.do<to ? ` do ${fDate(x.do)}` : ''))};
   });
   const pk = {};
   trips.concat(fuels).forEach(x => { const k = x.userId+'|'+x.vehicleId; pk[k] = pk[k] || {u:userBy(x.userId), v:veh(x.vehicleId), n:0, km:0, nal:0, zat:0}; });
@@ -1044,16 +1123,15 @@ function viewRange(){
       <div class="field" style="margin:0"><label for="r-to">Do</label><input type="date" id="r-to" value="${U.rto}"></div>
       <div class="field" style="margin:0"><label for="r-st">Wpisy</label><select id="r-st"><option value="all" ${U.rst==='all'?'selected':''}>Wszystkie bez odrzuconych</option><option value="acc" ${U.rst==='acc'?'selected':''}>Tylko zaakceptowane</option></select></div>
       <div class="ent-acts" style="margin:0">${[['cur','Bieżący miesiąc'],['prev','Poprzedni miesiąc'],['q','Bieżący kwartał'],['y','Od początku roku']].map(([k,l])=>`<button class="btn btn-ghost btn-sm" data-a="rpre" data-k="${k}">${l}</button>`).join('')}</div>
-      ${downloads ? `<div style="margin-left:auto"><button class="btn btn-primary btn-sm" data-a="exportRange">${I.xls}Eksportuj do Excela</button></div>` : ''}
     </div>`;
   if(!U.rfrom || !U.rto || U.rfrom > U.rto) return bar + `<div class="msg err">Data „od” musi być wcześniejsza lub równa dacie „do”.</div>`;
   const d = rangeData();
   const odoCell = o => o ? `${fKm(o.val)}<br><span class="muted small">${fDate(o.date)}</span>` : '<span class="muted">brak</span>';
-  const vt = d.vrows.length ? `<div class="tbl-wrap"><table><thead><tr><th>Samochód</th><th>Użytkownicy</th><th class="n">Stan na początku</th><th class="n">Stan na końcu</th><th class="n">Przebieg</th><th class="n">Prywatne zgł. (km)</th><th class="n">Prywatne uzup. (km)</th><th class="n">Służbowe (km)</th><th class="n">Udział prywatny</th><th class="n">Należne (l)</th><th class="n">Zatankowane zgł. (l)</th><th class="n">Zatankowane uzup. (l)</th></tr></thead><tbody>
+  const vt = d.vrows.length ? `<div class="tbl-wrap"><table><thead><tr><th>Samochód</th><th>Użytkownicy</th><th class="n">Stan na początku</th><th class="n">Stan na końcu</th><th class="n">Przebieg</th><th class="n">Prywatne zgł. (km)</th><th class="n">Prywatne uzup. (km)</th><th class="n">Paliwo za uzup. (l)</th><th class="n">Służbowe (km)</th><th class="n">Udział prywatny</th><th class="n">Należne (l)</th><th class="n">Zatankowane zgł. (l)</th><th class="n">Zatankowane uzup. (l)</th></tr></thead><tbody>
     ${d.vrows.map(r => `<tr><td><span class="who">${esc(r.v.nr)}</span><br><span class="muted small">${esc(r.v.model)}</span></td><td class="small">${r.users.map(esc).join('<br>') || '—'}</td>
       <td class="n">${odoCell(r.a)}</td><td class="n">${odoCell(r.b)}</td>
       <td class="n"><b>${r.przebieg!=null ? fKm(r.przebieg) : '—'}</b>${r.przebieg!=null && !r.exact ? '<br><span class="muted small">przybliżony</span>' : ''}</td>
-      <td class="n">${fKm(r.kmZgl)}</td><td class="n ${r.kmUzup?'hl':''}">${r.kmUzup ? fKm(r.kmUzup) : '—'}</td>
+      <td class="n">${fKm(r.kmZgl)}</td><td class="n ${r.kmUzup?'hl':''}">${r.kmUzup ? fKm(r.kmUzup) : '—'}</td><td class="n ${r.nalUzup?'hl':''}">${r.nalUzup ? '<b>'+fL(r.nalUzup)+'</b>' : '—'}</td>
       <td class="n ${r.sluzb!=null && r.sluzb<0 ? 'flag' : ''}">${r.sluzb!=null ? fKm(r.sluzb) : '—'}</td><td class="n">${fPct(r.udzial)}</td>
       <td class="n">${fL(r.nal)}</td><td class="n">${fL(r.lZgl)}</td><td class="n ${r.lUzup?'hl':''}">${r.lUzup ? fL(r.lUzup) : '—'}</td></tr>`).join('')}</tbody></table></div>` : '<div class="card empty">Brak samochodów w tym zakresie.</div>';
   const pt = d.prows.length ? `<div class="tbl-wrap"><table><thead><tr><th>Użytkownik</th><th>Samochód</th><th class="n">Przejazdy</th><th class="n">Km prywatne</th><th class="n">Należne (l)</th><th class="n">Zatankowane (l)</th><th class="n">Różnica (l)</th></tr></thead><tbody>
@@ -1077,8 +1155,8 @@ function exportRange(){
   if(!window.XLSX){ toast('Nie wczytano biblioteki do eksportu. Sprawdź połączenie i odśwież stronę.', true); return; }
   rangeDefaults();
   const d = rangeData(), zakres = `${U.rfrom} – ${U.rto}`, wpisy = U.rst==='acc' ? 'tylko zaakceptowane' : 'wszystkie bez odrzuconych';
-  const pz = [['Zakres','Wpisy','Samochód','Model','Spółka','Użytkownicy','Stan na początku','Data stanu początkowego','Stan na końcu','Data stanu końcowego','Przebieg (km)','Przebieg dokładny','Prywatne zgłoszone (km)','Prywatne uzupełnione (km)','Służbowe wyliczone (km)','Udział prywatny (%)','Norma l/100 km','Litry należne','Zatankowane zgłoszone (l)','Zatankowane uzupełnione (l)']];
-  d.vrows.forEach(r => pz.push([zakres, wpisy, r.v.nr, r.v.model, r.v.spolka, r.users.join(', '), r.a ? r.a.val : '', r.a ? r.a.date : '', r.b ? r.b.val : '', r.b ? r.b.date : '', r.przebieg ?? '', r.przebieg!=null ? (r.exact ? 'tak' : 'nie') : '', r.kmZgl, r.kmUzup, r.sluzb ?? '', r.udzial!=null ? Math.round(r.udzial*1000)/10 : '', r.v.norma, r.nal, r.lZgl, r.lUzup]));
+  const pz = [['Zakres','Wpisy','Samochód','Model','Spółka','Użytkownicy','Stan na początku','Data stanu początkowego','Stan na końcu','Data stanu końcowego','Przebieg (km)','Przebieg dokładny','Prywatne zgłoszone (km)','Prywatne uzupełnione (km)','Paliwo do zatankowania za uzupełnienia (l)','Służbowe wyliczone (km)','Udział prywatny (%)','Norma l/100 km','Litry należne','Zatankowane zgłoszone (l)','Zatankowane uzupełnione (l)']];
+  d.vrows.forEach(r => pz.push([zakres, wpisy, r.v.nr, r.v.model, r.v.spolka, r.users.join(', '), r.a ? r.a.val : '', r.a ? r.a.date : '', r.b ? r.b.val : '', r.b ? r.b.date : '', r.przebieg ?? '', r.przebieg!=null ? (r.exact ? 'tak' : 'nie') : '', r.kmZgl, r.kmUzup, r.nalUzup, r.sluzb ?? '', r.udzial!=null ? Math.round(r.udzial*1000)/10 : '', r.v.norma, r.nal, r.lZgl, r.lUzup]));
   const pu = [['Zakres','Użytkownik','Samochód','Liczba przejazdów','Km prywatne','Litry należne','Zatankowane (l)','Różnica (l)']];
   d.prows.forEach(r => pu.push([zakres, r.u.name, r.v.nr, r.n, r.km, r.nal, r.zat, r.diff]));
   const t = [['Data','Użytkownik','Samochód','Licznik start','Licznik koniec','Km','Trasa','Litry wg normy','Status','Uzupełnienie rozliczającego']];
@@ -1087,7 +1165,7 @@ function exportRange(){
   d.fuels.forEach(x => f.push([x.date, userBy(x.userId).name, veh(x.vehicleId).nr, x.litry, x.status, x.manual ? (x.source||'tak') : '', x.note || '']));
   const wb = XLSX.utils.book_new();
   const add = (aoa, name, w) => { const ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = w.map(x=>({wch:x})); XLSX.utils.book_append_sheet(wb, ws, name); };
-  add(pz, 'Samochody', [23,22,11,24,8,34,14,14,14,14,12,12,14,14,14,12,10,11,14,14]);
+  add(pz, 'Samochody', [23,22,11,24,8,34,14,14,14,14,12,12,14,14,18,14,12,10,11,14,14]);
   add(pu, 'Użytkownicy', [23,20,11,10,11,12,13,11]);
   add(t, 'Przejazdy', [11,20,11,12,12,8,34,13,14,24]);
   add(f, 'Tankowania', [11,20,11,8,14,24,30]);
@@ -1104,13 +1182,13 @@ function viewReportMonth(){
   const done = rows.filter(r => r.ver && r.ver.done).length;
   const miss = (val) => val!=null ? fKm(val) : (closed ? '—' : '<span class="badge">brak</span>');
   const table = rows.length ? `<div class="tbl-wrap"><table>
-    <thead><tr><th>Samochód</th><th>Użytkownicy</th><th class="n">Stan na ${fDate(lastDay(prevP(p)))}</th><th class="n">Stan na ${fDate(lastDay(p))}</th><th class="n">Przebieg</th><th class="n">Prywatne zgł. (km)</th><th class="n">Prywatne uzup. (km)</th><th class="n">Służbowe (km)</th><th class="n">Udział prywatny</th><th class="n">Należne (l)</th><th class="n">Zatankowane zgł. (l)</th><th class="n">Zatankowane uzup. (l)</th><th>Weryfikacja</th></tr></thead>
+    <thead><tr><th>Samochód</th><th>Użytkownicy</th><th class="n">Stan na ${fDate(lastDay(prevP(p)))}</th><th class="n">Stan na ${fDate(lastDay(p))}</th><th class="n">Przebieg</th><th class="n">Prywatne zgł. (km)</th><th class="n">Prywatne uzup. (km)</th><th class="n">Paliwo za uzup. (l)</th><th class="n">Służbowe (km)</th><th class="n">Udział prywatny</th><th class="n">Należne (l)</th><th class="n">Zatankowane zgł. (l)</th><th class="n">Zatankowane uzup. (l)</th><th>Weryfikacja</th></tr></thead>
     <tbody>${rows.map(r => `<tr class="click" data-a="vdetail" data-veh="${r.v.id}" tabindex="0">
       <td><span class="who">${esc(r.v.nr)}</span><br><span class="muted small">${esc(r.v.model)}</span></td>
       <td class="small">${r.users.map(x=>esc(x.txt)).join('<br>') || '—'}</td>
       <td class="n">${miss(r.start)}</td><td class="n">${miss(r.end)}</td>
       <td class="n"><b>${r.przebieg!=null ? fKm(r.przebieg) : '—'}</b></td>
-      <td class="n">${fKm(r.kmZgl)}</td><td class="n ${r.kmUzup?'hl':''}">${r.kmUzup ? fKm(r.kmUzup) : '—'}</td>
+      <td class="n">${fKm(r.kmZgl)}</td><td class="n ${r.kmUzup?'hl':''}">${r.kmUzup ? fKm(r.kmUzup) : '—'}</td><td class="n ${r.nalUzup?'hl':''}">${r.nalUzup ? '<b>'+fL(r.nalUzup)+'</b>' : '—'}</td>
       <td class="n ${r.sluzb!=null && r.sluzb<0 ? 'flag' : ''}">${r.sluzb!=null ? fKm(r.sluzb) : '—'}</td>
       <td class="n">${fPct(r.udzial)}</td><td class="n">${fL(r.nal)}</td>
       <td class="n">${fL(r.lZgl)}</td><td class="n ${r.lUzup?'hl':''}">${r.lUzup ? fL(r.lUzup) : '—'}</td>
@@ -1120,7 +1198,7 @@ function viewReportMonth(){
   return `<div class="pbar">
       <div class="pnav"><button data-a="per" data-d="-1" ${i<=0?'disabled':''} aria-label="Poprzedni miesiąc">‹</button><span class="pn">${pName(p)}</span><button data-a="per" data-d="1" ${i>=list.length-1?'disabled':''} aria-label="Następny miesiąc">›</button></div>
       <span class="status ${done===rows.length && rows.length ? 'closed' : 'open'}">Zweryfikowano ${done} z ${rows.length}</span>
-      <div class="acts">${downloads ? `<button class="btn btn-ghost btn-sm" data-a="exportReport">${I.xls}Eksportuj raport do Excela</button>` : ''}</div>
+      
     </div>
     <div style="margin-top:18px">${table}</div>
     `;
@@ -1131,7 +1209,7 @@ function modalVeh(m){
   const fuels = S.fuels.filter(f => f.vehicleId===m.v && f.okres===p).sort((a,b)=>a.date.localeCompare(b.date));
   const tag = e => `<span class="pill p-${e.status}">${e.status}</span>${e.manual ? ` <span class="pill p-late">uzupełnienie${e.source?': '+esc(e.source):''}</span>` : ''}`;
   const del = (k,e) => e.manual && !closed ? `<div class="ent-acts"><button class="btn btn-ghost btn-sm" data-a="suppDel" data-k="${k}" data-id="${e.id}">Usuń uzupełnienie</button></div>` : '';
-  const tRows = trips.map(e => `<div class="entry"><div class="ico">${I.car}</div><div><div class="t">${esc(e.trasa)}</div><div class="s">${fDate(e.date)} · ${esc(userBy(e.userId).name)}${e.start!=null?` · licznik ${fKm(e.start)}–${fKm(e.end)}`:''}</div>${tag(e)}${e.comment?`<div class="comment">${esc(e.comment)}</div>`:''}${del('trip',e)}</div><div class="r">${fKm(e.km)} km</div></div>`).join('');
+  const tRows = trips.map(e => `<div class="entry"><div class="ico">${I.car}</div><div><div class="t">${esc(e.trasa)}</div><div class="s">${fDate(e.date)} · ${esc(userBy(e.userId).name)}${e.start!=null?` · licznik ${fKm(e.start)}–${fKm(e.end)}`:''}</div>${tag(e)}${e.comment?`<div class="comment">${esc(e.comment)}</div>`:''}${del('trip',e)}</div><div class="r">${fKm(e.km)} km<br><span class="muted small">${fL(r2(e.km*v.norma/100))} l</span></div></div>`).join('');
   const fRows = fuels.map(e => `<div class="entry"><div class="ico">${I.fuel}</div><div><div class="t">${e.manual ? 'Tankowanie (uzupełnienie)' : 'Tankowanie prywatne'}</div><div class="s">${fDate(e.date)} · ${esc(userBy(e.userId).name)}${e.note?' · '+esc(e.note):''}</div>${tag(e)}${e.comment?`<div class="comment">${esc(e.comment)}</div>`:''}${del('fuel',e)}</div><div class="r">${fL(e.litry)} l</div></div>`).join('');
   const userOpts = (r.users.filter(x=>x.u).length ? r.users.filter(x=>x.u).map(x=>x.u) : S.users.filter(u=>u.role==='driver')).filter((u,i,a)=>a.indexOf(u)===i).map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('');
   const srcOpts = SOURCES.map(x=>`<option>${x}</option>`).join('');
@@ -1141,6 +1219,7 @@ function modalVeh(m){
       <div class="row2"><div class="field"><label for="s-user">Użytkownik</label><select id="s-user">${userOpts}</select></div><div class="field"><label for="s-date">Data</label><input type="date" id="s-date" min="${fd}" max="${ld}" value="${today()<ld?today():ld}"></div></div>
       <div class="row2"><div class="field"><label for="s-start">Licznik na starcie (opcjonalnie)</label><input type="number" inputmode="numeric" id="s-start"></div><div class="field"><label for="s-end">Licznik na końcu (opcjonalnie)</label><input type="number" inputmode="numeric" id="s-end"></div></div>
       <div class="field"><label for="s-km">Kilometry</label><input type="number" inputmode="numeric" id="s-km" min="1"><div class="hint">Gdy podasz oba stany licznika, kilometry wyliczą się z nich.</div></div>
+      <div class="preview" id="s-prev"></div>
       <div class="field"><label for="s-trasa">Trasa lub opis</label><input type="text" id="s-trasa" placeholder="np. Chorzów – Ustroń – Chorzów, wg GPS"></div>
       <div class="field"><label for="s-src">Źródło ustalenia</label><select id="s-src">${srcOpts}</select></div>
       <div class="ent-acts"><button class="btn btn-ghost btn-sm" data-a="suppCancel">Anuluj</button><button class="btn btn-primary btn-sm" data-a="suppTripDo">Dodaj przejazd</button></div></div>`;
@@ -1161,7 +1240,7 @@ function modalVeh(m){
       <span class="sum">Przebieg miesiąca</span><span class="num sum">${r.przebieg!=null ? fKm(r.przebieg)+' km' : '—'}</span>
       <span>Przejazdy prywatne: zgłoszone + uzupełnione</span><span class="num">${fKm(r.kmZgl)} + ${fKm(r.kmUzup)} km</span>
       <span>Przejazdy służbowe (wyliczone)</span><span class="num ${r.sluzb!=null&&r.sluzb<0?'flag':''}">${r.sluzb!=null ? fKm(r.sluzb)+' km' : '—'}</span>
-      <span>Należne wg normy ${fL(v.norma)} l/100 km</span><span class="num">${fL(r.nal)} l</span>
+      <span>Należne wg normy ${fL(v.norma)} l/100 km: zgłoszone + uzupełnione</span><span class="num">${fL(r.nalZgl)} + <b>${fL(r.nalUzup)}</b> l</span>
       <span>Zatankowane: zgłoszone + uzupełnione</span><span class="num">${fL(r.lZgl)} + ${fL(r.lUzup)} l</span>
     </div>${r.sluzb!=null && r.sluzb<0 ? '<div class="msg err">Przejazdy prywatne przekraczają przebieg miesiąca. Sprawdź stany licznika i zgłoszenia.</div>' : ''}</div>
     <h4 class="sec">Przejazdy prywatne</h4><div>${tRows || '<div class="empty">Brak przejazdów prywatnych.</div>'}</div>
@@ -1208,14 +1287,14 @@ function suppFuel(){
 function exportReport(){
   if(!window.XLSX){ toast('Nie wczytano biblioteki do eksportu. Sprawdź połączenie i odśwież stronę.', true); return; }
   const p = U.period, rows = vehiclesInPeriod(p).map(v => vehReport(v.id, p));
-  const a = [['Okres','Samochód','Model','Spółka','Użytkownicy',`Stan na ${lastDay(prevP(p))}`,`Stan na ${lastDay(p)}`,'Przebieg miesiąca (km)','Prywatne zgłoszone (km)','Prywatne uzupełnione (km)','Prywatne razem (km)','Służbowe wyliczone (km)','Udział prywatny (%)','Norma l/100 km','Litry należne','Zatankowane zgłoszone (l)','Zatankowane uzupełnione (l)','Zatankowane razem (l)','Weryfikacja','Uwagi z weryfikacji']];
-  rows.forEach(r => a.push([p, r.v.nr, r.v.model, r.v.spolka, r.users.map(x=>x.txt).join(', '), r.start ?? '', r.end ?? '', r.przebieg ?? '', r.kmZgl, r.kmUzup, r.kmPryw, r.sluzb ?? '', r.udzial!=null ? Math.round(r.udzial*1000)/10 : '', r.v.norma, r.nal, r.lZgl, r.lUzup, r.lRazem, r.ver && r.ver.done ? 'zweryfikowany' : 'do weryfikacji', r.ver ? r.ver.note : '']));
+  const a = [['Okres','Samochód','Model','Spółka','Użytkownicy',`Stan na ${lastDay(prevP(p))}`,`Stan na ${lastDay(p)}`,'Przebieg miesiąca (km)','Prywatne zgłoszone (km)','Prywatne uzupełnione (km)','Paliwo do zatankowania za uzupełnienia (l)','Prywatne razem (km)','Służbowe wyliczone (km)','Udział prywatny (%)','Norma l/100 km','Litry należne','Zatankowane zgłoszone (l)','Zatankowane uzupełnione (l)','Zatankowane razem (l)','Weryfikacja','Uwagi z weryfikacji']];
+  rows.forEach(r => a.push([p, r.v.nr, r.v.model, r.v.spolka, r.users.map(x=>x.txt).join(', '), r.start ?? '', r.end ?? '', r.przebieg ?? '', r.kmZgl, r.kmUzup, r.nalUzup, r.kmPryw, r.sluzb ?? '', r.udzial!=null ? Math.round(r.udzial*1000)/10 : '', r.v.norma, r.nal, r.lZgl, r.lUzup, r.lRazem, r.ver && r.ver.done ? 'zweryfikowany' : 'do weryfikacji', r.ver ? r.ver.note : '']));
   const u = [['Typ','Data','Samochód','Użytkownik','Km','Litry','Licznik start','Licznik koniec','Trasa / uwagi','Źródło ustalenia','Dodał']];
   S.trips.filter(x=>x.okres===p && x.manual).forEach(x => u.push(['Przejazd prywatny', x.date, veh(x.vehicleId).nr, userBy(x.userId).name, x.km, '', x.start ?? '', x.end ?? '', x.trasa, x.source, userBy(x.addedBy) ? userBy(x.addedBy).name : '']));
   S.fuels.filter(x=>x.okres===p && x.manual).forEach(x => u.push(['Tankowanie', x.date, veh(x.vehicleId).nr, userBy(x.userId).name, '', x.litry, '', '', x.note || '', x.source, userBy(x.addedBy) ? userBy(x.addedBy).name : '']));
   const wb = XLSX.utils.book_new();
   const add = (aoa, name, w) => { const ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = w.map(x=>({wch:x})); XLSX.utils.book_append_sheet(wb, ws, name); };
-  add(a, 'Raport pojazdów', [9,11,24,8,34,14,14,14,14,14,13,14,12,10,11,14,14,13,15,40]);
+  add(a, 'Raport pojazdów', [9,11,24,8,34,14,14,14,14,14,18,13,14,12,10,11,14,14,13,15,40]);
   add(u, 'Uzupełnienia', [17,11,11,20,8,8,12,12,36,22,18]);
   const buf = XLSX.write(wb, {type:'array', bookType:'xlsx'});
   downloads.save({filename:`ALBA_Raport_pojazdow_${p}.xlsx`, data:new Blob([buf])})
@@ -1223,8 +1302,20 @@ function exportReport(){
     .catch(err => { if(err && err.code==='declined') return; toast('Nie udało się zapisać pliku.', true); });
 }
 
+function uzupL(u, v, p, norma){
+  const km = sum(S.trips.filter(t => t.manual && t.userId===u && t.vehicleId===v && t.okres===p && (t.status==='Zaakceptowany' || t.status==='Rozliczony')), t => t.km);
+  return r2(km * (norma ?? veh(v).norma) / 100);
+}
+function suppPrev(pfx){
+  const box = $('#'+pfx+'-prev'); if(!box) return;
+  const vid = pfx==='u' ? ($('#u-veh')||{}).value : (U.modal && U.modal.v), v = veh(vid); if(!v) return;
+  const s = parseInt(($('#'+pfx+'-start')||{}).value,10), e = parseInt(($('#'+pfx+'-end')||{}).value,10);
+  let km = parseInt(($('#'+pfx+'-km')||{}).value,10);
+  if(!isNaN(s) && !isNaN(e) && e > s){ km = e - s; const k = $('#'+pfx+'-km'); if(k) k.value = km; }
+  box.innerHTML = `<div><div class="muted small">Przejazd</div><div class="km">${!isNaN(km) && km>0 ? fKm(km)+' km' : '— km'}</div></div><div class="l">Paliwo do zatankowania wg normy ${fL(v.norma)} l/100 km<b>${!isNaN(km) && km>0 ? fL(r2(km*v.norma/100))+' l' : '—'}</b></div>`;
+}
 function pairShare(u, v, p, km){
-  const vv = veh(v); if(vv.typ==='pool') return null;
+  const vv = veh(v);
   const us = usersOfVehicle(v, p); if(us.length!==1 || !us[0].u || us[0].u.id!==u) return null;
   const rs = readingFor(prevP(p), v), re = readingFor(p, v);
   if(!rs || !re || re.licznik<=rs.licznik) return null;
@@ -1244,7 +1335,7 @@ function unrepData(){
     const priv = allPriv.filter(t => t.userId===u.id);
     const km = sum(mine, t=>t.km), kmAll = sum(priv, t=>t.km);
     const nal = r2(sum(mine, t => t.km*veh(t.vehicleId).norma/100));
-    const missOdo = months.filter(p => lastDay(p) >= from && lastDay(p) <= to && lastDay(p) < today()).reduce((n,p) => n + missingReadings(p).filter(x=>x.u===u.id).length, 0);
+    const missOdo = months.filter(p => p >= FIRST_PERIOD && lastDay(p) >= from && lastDay(p) <= to && lastDay(p) < today()).reduce((n,p) => n + missingReadings(p).filter(x=>x.u===u.id).length, 0);
     const late = S.trips.concat(S.fuels).filter(x => x.userId===u.id && !x.manual && x.late && inR(x.date)).length
       + S.readings.filter(r => r.userId===u.id && r.late && inR(lastDay(r.okres))).length;
     const lastBy = {}; myPairsOpen(u).forEach(c => { if(!lastBy[c.vehicleId] || c.okres > lastBy[c.vehicleId].okres) lastBy[c.vehicleId] = c; });
@@ -1260,7 +1351,7 @@ function viewUnrep(){
       <div class="field" style="margin:0"><label for="r-from">Od</label><input type="date" id="r-from" value="${U.rfrom}"></div>
       <div class="field" style="margin:0"><label for="r-to">Do</label><input type="date" id="r-to" value="${U.rto}"></div>
       <div class="ent-acts" style="margin:0">${[['cur','Bieżący miesiąc'],['prev','Poprzedni miesiąc'],['q','Bieżący kwartał'],['y','Od początku roku']].map(([k,l])=>`<button class="btn btn-ghost btn-sm" data-a="rpre" data-k="${k}">${l}</button>`).join('')}</div>
-      <div style="margin-left:auto" class="ent-acts"><button class="btn btn-primary btn-sm" data-a="addUnrep">${I.car}Dodaj niezgłoszony przejazd</button>${downloads ? `<button class="btn btn-ghost btn-sm" data-a="exportUnrep">${I.xls}Eksportuj do Excela</button>` : ''}</div>
+      <div style="margin-left:auto" class="ent-acts"><button class="btn btn-primary btn-sm" data-a="addUnrep">${I.car}Dodaj niezgłoszony przejazd</button></div>
     </div>`;
   if(!U.rfrom || !U.rto || U.rfrom > U.rto) return bar + `<div class="msg err">Data „od” musi być wcześniejsza lub równa dacie „do”.</div>`;
   const d = unrepData();
@@ -1293,16 +1384,17 @@ function modalAddUnrep(){
   const vid = U.addVeh || vs[0].id, date = U.addDate || today();
   const v = veh(vid);
   const assigned = S.assignments.filter(a => a.vehicleId===vid && a.od<=date && (!a.do || a.do>=date)).map(a => userBy(a.userId));
-  const users = (assigned.length && v.typ!=='pool' ? assigned : S.users.filter(u=>u.role==='driver'));
+  const users = v.typ==='pool' ? (v.opiekunId ? [userBy(v.opiekunId)] : S.users.filter(u=>u.role==='driver')) : (assigned.length ? assigned : S.users.filter(u=>u.role==='driver'));
   const o = okresFor(date);
   return `<button class="x" data-a="mClose" aria-label="Zamknij">×</button>
     <h3>Dodaj niezgłoszony przejazd prywatny</h3><div class="muted small">Przejazd ustalony przy weryfikacji, którego użytkownik nie zgłosił.</div>
     <div class="row2"><div class="field"><label for="u-veh">Samochód</label><select id="u-veh">${vs.map(x=>`<option value="${x.id}" ${x.id===vid?'selected':''}>${esc(x.nr)} · ${esc(x.model)}${x.typ==='pool'?' (pula)':''}</option>`).join('')}</select></div>
       <div class="field"><label for="u-date">Data przejazdu</label><input type="date" id="u-date" value="${date}" max="${today()}"></div></div>
     <div class="field"><label for="u-user">Użytkownik</label><select id="u-user">${users.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('')}</select>
-      <div class="hint">${v.typ==='pool' ? 'Samochód z puli: wybierz osobę, która nim jechała.' : (assigned.length ? 'Podpowiedź: osoba z przydziałem samochodu w tym dniu.' : 'W tym dniu samochód nie miał przydziału.')}</div></div>
+      <div class="hint">${v.typ==='pool' ? 'Samochód z puli jest przypisany do opiekuna.' : (assigned.length ? 'Podpowiedź: osoba z przydziałem samochodu w tym dniu.' : 'W tym dniu samochód nie miał przydziału.')}</div></div>
     <div class="row2"><div class="field"><label for="u-start">Licznik na starcie (opcjonalnie)</label><input type="number" inputmode="numeric" id="u-start"></div><div class="field"><label for="u-end">Licznik na końcu (opcjonalnie)</label><input type="number" inputmode="numeric" id="u-end"></div></div>
     <div class="field"><label for="u-km">Kilometry</label><input type="number" inputmode="numeric" id="u-km" min="1"><div class="hint">Norma ${fL(v.norma)} l/100 km. Gdy podasz oba stany licznika, kilometry wyliczą się z nich.</div></div>
+    <div class="preview" id="u-prev"></div>
     <div class="field"><label for="u-trasa">Trasa lub opis</label><input type="text" id="u-trasa" placeholder="np. Chorzów – Wisła – Chorzów, wg GPS"></div>
     <div class="field"><label for="u-src">Źródło ustalenia</label><select id="u-src">${SOURCES.map(x=>`<option>${x}</option>`).join('')}</select></div>
     ${o.late ? `<div class="msg warn">Rozliczenie za ${pName(per(date))} jest zamknięte. Przejazd trafi do rozliczenia za ${pName(o.okres)}.</div>` : ''}
@@ -1339,6 +1431,122 @@ function exportUnrep(){
     .catch(err => { if(err && err.code==='declined') return; toast('Nie udało się zapisać pliku.', true); });
 }
 
+/* ---------- raport zbiorczy ---------- */
+function xPreset(k){
+  const t = today(), tp = per(t);
+  if(k==='sel'){ const p = U.period || firstOpen(); return [p+'-01', lastDay(p)]; }
+  if(k==='cur') return [tp+'-01', t];
+  if(k==='prev'){ const p = prevP(tp); return [p+'-01', lastDay(p)]; }
+  if(k==='q'){ const [y,m] = tp.split('-').map(Number); return [`${y}-${pad(Math.floor((m-1)/3)*3+1)}-01`, t]; }
+  if(k==='y') return [FIRST_PERIOD+'-01', t];
+  return [U.rfrom || tp+'-01', U.rto || t];
+}
+function modalExportAll(){
+  const monthView = U.view==='admin' || (U.view==='report' && U.rmode!=='range');
+  const [f, t] = monthView ? xPreset('sel') : xPreset('range');
+  const sheets = ['Podsumowanie','Rozliczenie miesięczne','Raport pojazdów (miesiące)','Pojazdy – zakres','Użytkownicy – zakres','Ranking','Niezgłoszone przejazdy','Przejazdy','Tankowania','Stany liczników'];
+  return `<button class="x" data-a="mClose" aria-label="Zamknij">×</button>
+    <h3>Raport zbiorczy do Excela</h3><div class="muted small">Jeden plik ze wszystkimi raportami za wybrany zakres.</div>
+    <div class="row2"><div class="field"><label for="x-from">Od</label><input type="date" id="x-from" value="${f}"></div><div class="field"><label for="x-to">Do</label><input type="date" id="x-to" value="${t}"></div></div>
+    <div class="ent-acts">${[['sel','Wybrany miesiąc'],['cur','Bieżący miesiąc'],['prev','Poprzedni miesiąc'],['q','Bieżący kwartał'],['y','Od początku danych']].map(([k,l])=>`<button class="btn btn-ghost btn-sm" data-a="xpre" data-k="${k}">${l}</button>`).join('')}</div>
+    <div class="field"><label for="x-st">Wpisy w arkuszach za zakres</label><select id="x-st"><option value="all">Wszystkie bez odrzuconych</option><option value="acc">Tylko zaakceptowane</option></select></div>
+    <div class="card" style="margin-top:14px"><b class="small">Arkusze w pliku</b><div class="small muted" style="margin-top:6px;line-height:1.6">${sheets.map((x,i)=>`${i+1}. ${x}`).join('<br>')}</div>
+      <div class="note">Arkusze miesięczne obejmują pełne miesiące, które zahaczają o wybrany zakres.</div></div>
+    <div class="form-actions"><button class="btn btn-ghost" data-a="mClose">Anuluj</button><button class="btn btn-primary" data-a="exportAllDo">${I.xls}Pobierz raport</button></div>`;
+}
+function exportAll(){
+  if(!window.XLSX){ toast('Nie wczytano biblioteki do eksportu. Sprawdź połączenie i odśwież stronę.', true); return; }
+  const from = $('#x-from').value, to = $('#x-to').value, stMode = $('#x-st').value;
+  if(!from || !to || from > to){ toast('Data „od” musi być wcześniejsza lub równa dacie „do”.', true); return; }
+  const keep = [U.rfrom, U.rto, U.rst];
+  U.rfrom = from; U.rto = to; U.rst = stMode;
+  const rd = rangeData(), ud = unrepData();
+  U.rfrom = keep[0]; U.rto = keep[1]; U.rst = keep[2];
+  const zakres = `${from} – ${to}`, inR = d => d>=from && d<=to;
+  const months = []; for(let p = per(from); p <= per(to); p = nextP(p)) if(p >= FIRST_PERIOD && p <= per(today())) months.push(p);
+  const pct = x => x==null ? '' : Math.round(x*1000)/10;
+  const uName = id => userBy(id) ? userBy(id).name : '';
+
+  /* Rozliczenie miesięczne */
+  const roz = [['Okres','Status okresu','Użytkownik','Samochód','Model','Spółka','Licznik początkowy','Licznik końcowy','Stan licznika na koniec miesiąca','Km prywatne','Udział prywatny (%)','Norma l/100 km','Litry należne','W tym za uzupełnienia (l)','Litry zatankowane','Saldo przeniesione','Saldo końcowe']];
+  /* Raport pojazdów (miesiące) */
+  const rp = [['Okres','Samochód','Model','Spółka','Użytkownicy','Stan na koniec poprzedniego miesiąca','Stan na koniec miesiąca','Przebieg miesiąca (km)','Prywatne zgłoszone (km)','Prywatne uzupełnione (km)','Paliwo do zatankowania za uzupełnienia (l)','Służbowe wyliczone (km)','Udział prywatny (%)','Norma l/100 km','Litry należne','Zatankowane zgłoszone (l)','Zatankowane uzupełnione (l)','Weryfikacja','Uwagi z weryfikacji']];
+  const sum1 = {km:0, nal:0, uz:0, zat:0, przebieg:0};
+  months.forEach(p => {
+    const closed = isClosed(p);
+    rowsFor(p).forEach(r => { const v = veh(r.vehicleId), uz = uzupL(r.userId, r.vehicleId, p, r.norma);
+      roz.push([p, closed?'zamknięty':'otwarty (wstępne)', uName(r.userId), v.nr, v.model, v.spolka, r.licznikStart ?? '', r.licznikEnd ?? '', r.licznikMiesiac ?? '', r.km, pct(pairShare(r.userId, r.vehicleId, p, r.km)), r.norma, r.litryNalezne, uz, r.litryZatankowane, r.saldoPrzen, r.saldoKon]); });
+    vehiclesInPeriod(p).map(v => vehReport(v.id, p)).forEach(r => {
+      rp.push([p, r.v.nr, r.v.model, r.v.spolka, r.users.map(x=>x.txt).join(', '), r.start ?? '', r.end ?? '', r.przebieg ?? '', r.kmZgl, r.kmUzup, r.nalUzup, r.sluzb ?? '', pct(r.udzial), r.v.norma, r.nal, r.lZgl, r.lUzup, r.ver && r.ver.done ? 'zweryfikowany' : 'do weryfikacji', r.ver ? r.ver.note : '']); });
+  });
+  /* Pojazdy i użytkownicy – zakres */
+  const pz = [['Samochód','Model','Spółka','Użytkownicy','Stan na początku','Data stanu początkowego','Stan na końcu','Data stanu końcowego','Przebieg (km)','Przebieg dokładny','Prywatne zgłoszone (km)','Prywatne uzupełnione (km)','Paliwo do zatankowania za uzupełnienia (l)','Służbowe wyliczone (km)','Udział prywatny (%)','Norma l/100 km','Litry należne','Zatankowane zgłoszone (l)','Zatankowane uzupełnione (l)']];
+  rd.vrows.forEach(r => { pz.push([r.v.nr, r.v.model, r.v.spolka, r.users.join(', '), r.a ? r.a.val : '', r.a ? r.a.date : '', r.b ? r.b.val : '', r.b ? r.b.date : '', r.przebieg ?? '', r.przebieg!=null ? (r.exact?'tak':'nie') : '', r.kmZgl, r.kmUzup, r.nalUzup, r.sluzb ?? '', pct(r.udzial), r.v.norma, r.nal, r.lZgl, r.lUzup]);
+    sum1.km += r.kmPryw; sum1.nal += r.nal; sum1.uz += r.nalUzup; sum1.zat += r.lZgl + r.lUzup; if(r.przebieg!=null) sum1.przebieg += r.przebieg; });
+  const pu = [['Użytkownik','Samochód','Liczba przejazdów','Km prywatne','Litry należne','Zatankowane (l)','Różnica (l)']];
+  rd.prows.forEach(r => pu.push([r.u.name, r.v.nr, r.n, r.km, r.nal, r.zat, r.diff]));
+  /* Ranking i niezgłoszone */
+  const rk = [['Pozycja','Użytkownik','Dział','Niezgłoszone przejazdy','Km niezgłoszone','Paliwo do zatankowania (l)','Udział w km prywatnych (%)','Brak stanu licznika (mies.)','Wpisy po terminie','Bieżące saldo do zatankowania (l)']];
+  ud.rank.forEach((r,i) => rk.push([i+1, r.u.name, r.u.dzial, r.n, r.km, r.nal, pct(r.share), r.missOdo, r.late, r.saldo]));
+  const nz = [['Data','Użytkownik','Samochód','Trasa / opis','Licznik start','Licznik koniec','Km','Norma l/100 km','Paliwo do zatankowania (l)','Źródło ustalenia','Dodał','Okres rozliczenia','Dopisany do późniejszego okresu']];
+  ud.trips.forEach(t => { const v = veh(t.vehicleId); nz.push([t.date, uName(t.userId), v.nr, t.trasa, t.start ?? '', t.end ?? '', t.km, v.norma, r2(t.km*v.norma/100), t.source||'', uName(t.addedBy), t.okres, t.late?'tak':'']); });
+  /* Wszystkie przejazdy, tankowania, stany */
+  const tr = [['Data','Użytkownik','Samochód','Licznik start','Licznik koniec','Km','Trasa','Litry wg normy','Status','Okres rozliczenia','Wpis po terminie','Uzupełnienie rozliczającego','Komentarz']];
+  S.trips.filter(t => inR(t.date)).sort((a,b)=>a.date.localeCompare(b.date)).forEach(t => { const v = veh(t.vehicleId); tr.push([t.date, uName(t.userId), v.nr, t.start ?? '', t.end ?? '', t.km, t.trasa, r2(t.km*v.norma/100), t.status, t.okres, t.late&&!t.manual?'tak':'', t.manual?(t.source||'tak'):'', t.comment||'']); });
+  const tk = [['Data','Użytkownik','Samochód','Litry','Paragon','Status','Okres rozliczenia','Wpis po terminie','Uzupełnienie rozliczającego','Komentarz / uwagi']];
+  S.fuels.filter(f => inR(f.date)).sort((a,b)=>a.date.localeCompare(b.date)).forEach(f => tk.push([f.date, uName(f.userId), veh(f.vehicleId).nr, f.litry, f.manual?'uzupełnienie':(f.photo?'tak':'nie'), f.status, f.okres, f.late?'tak':'', f.manual?(f.source||'tak'):'', f.comment || f.note || '']));
+  const sl = [['Okres','Samochód','Rodzaj','Odpowiada','Stan na dzień','Stan licznika (km)','Data podania','Po terminie']];
+  months.forEach(p => { const ld = lastDay(p); if(ld < from || ld > to) return;
+    const exp = expectedReadings(p), vids = new Set(exp.map(x=>x.v).concat(S.readings.filter(r=>r.okres===p).map(r=>r.vehicleId)));
+    [...vids].map(veh).sort((a,b)=>a.nr.localeCompare(b.nr)).forEach(v => { const rr = readingFor(p, v.id), resp = exp.find(x=>x.v===v.id);
+      sl.push([p, v.nr, v.typ==='pool'?'z puli':'przydzielony', uName(rr ? rr.userId : (resp ? resp.u : '')), ld, rr ? rr.licznik : (ld < today() ? 'brak' : 'jeszcze nie wymagany'), rr ? rr.date : '', rr && rr.late ? 'tak' : '']); }); });
+  /* Podsumowanie */
+  const me_ = me();
+  const pod = [
+    ['Raport zbiorczy – przejazdy prywatne i rozliczenie paliwa'], [],
+    ['Zakres', zakres], ['Wpisy w arkuszach za zakres', stMode==='acc' ? 'tylko zaakceptowane' : 'wszystkie bez odrzuconych'],
+    ['Wygenerowano', today()], ['Wygenerował(a)', me_ ? me_.name : ''],
+    ['Miesiące w arkuszach miesięcznych', months.map(p => `${p} (${isClosed(p)?'zamknięty':'otwarty'})`).join(', ')], [],
+    ['Wskaźnik','Wartość'],
+    ['Przebieg samochodów ze stanem licznika (km)', sum1.przebieg],
+    ['Km prywatne (zgłoszone i uzupełnione)', sum1.km],
+    ['Litry należne wg norm', r2(sum1.nal)],
+    ['w tym za przejazdy uzupełnione przez rozliczającego (l)', r2(sum1.uz)],
+    ['Zatankowane prywatnie (l)', r2(sum1.zat)],
+    ['Niezgłoszone przejazdy (liczba)', ud.trips.length],
+    ['Niezgłoszone przejazdy (km)', sum(ud.trips, t=>t.km)],
+    ['Paliwo do zatankowania za niezgłoszone przejazdy (l)', r2(sum(ud.trips, t => t.km*veh(t.vehicleId).norma/100))],
+    [], ['Arkusz','Zawartość'],
+    ['Rozliczenie miesięczne','Saldo paliwa dla każdej pary użytkownik–samochód w każdym miesiącu (z przeniesieniami)'],
+    ['Raport pojazdów (miesiące)','Przebieg, km prywatne i służbowe, udział prywatny, uzupełnienia i weryfikacja dla każdego samochodu'],
+    ['Pojazdy – zakres','Te same wskaźniki dla całego wybranego zakresu dat'],
+    ['Użytkownicy – zakres','Km prywatne, litry należne i zatankowane w zakresie, bez sald z wcześniejszych miesięcy'],
+    ['Ranking','Osoby, które nie rozliczają wszystkich przejazdów'],
+    ['Niezgłoszone przejazdy','Przejazdy dodane przez rozliczającego z paliwem do zatankowania'],
+    ['Przejazdy','Wszystkie przejazdy prywatne w zakresie, także odrzucone i oczekujące'],
+    ['Tankowania','Wszystkie tankowania prywatne w zakresie'],
+    ['Stany liczników','Stany na koniec miesiąca wraz z brakami i wpisami po terminie']
+  ];
+  const wb = XLSX.utils.book_new();
+  const add = (aoa, name, w, filter) => { const ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = w.map(x=>({wch:x}));
+    if(filter && aoa.length > 1) ws['!autofilter'] = {ref: XLSX.utils.encode_range({s:{r:0,c:0}, e:{r:aoa.length-1, c:aoa[0].length-1}})};
+    XLSX.utils.book_append_sheet(wb, ws, name); };
+  add(pod, 'Podsumowanie', [52,60], false);
+  add(roz, 'Rozliczenie miesięczne', [9,16,20,11,24,8,12,12,14,10,12,10,11,14,12,13,12], true);
+  add(rp, 'Raport pojazdów (miesiące)', [9,11,24,8,34,16,14,14,14,14,18,14,12,10,11,14,14,15,36], true);
+  add(pz, 'Pojazdy – zakres', [11,24,8,34,12,12,12,12,12,10,14,14,18,14,12,10,11,14,14], true);
+  add(pu, 'Użytkownicy – zakres', [20,11,10,11,12,13,11], true);
+  add(rk, 'Ranking', [8,20,20,12,12,14,14,14,12,16], true);
+  add(nz, 'Niezgłoszone przejazdy', [11,20,11,44,12,12,8,10,14,22,18,12,14], true);
+  add(tr, 'Przejazdy', [11,20,11,12,12,8,40,12,14,12,12,24,40], true);
+  add(tk, 'Tankowania', [11,20,11,8,12,14,12,12,24,40], true);
+  add(sl, 'Stany liczników', [9,11,12,20,12,16,12,10], true);
+  const buf = XLSX.write(wb, {type:'array', bookType:'xlsx'});
+  downloads.save({filename:`ALBA_Raport_zbiorczy_${from}_${to}.xlsx`, data:new Blob([buf])})
+    .then(() => { U.modal = null; renderModal(); toast('Raport zbiorczy zapisany'); })
+    .catch(err => { if(err && err.code==='declined') return; toast('Nie udało się zapisać pliku.', true); });
+}
+
 function viewDict(){
   const vrows = S.vehicles.map(v => `<tr><td><b>${esc(v.nr)}</b></td><td>${esc(v.model)}</td><td>${v.spolka}</td><td>${v.paliwo}</td><td class="n">${fL(v.norma)}</td><td class="n">${v.zbiornik}</td><td>${esc(v.garaz)}</td><td>${v.typ==='pool' ? 'z puli' : 'przydzielony'}</td><td>${v.typ==='pool' && v.opiekunId ? esc(userBy(v.opiekunId).name) : '—'}</td></tr>`).join('');
   const arows = S.assignments.slice().sort((a,b)=>veh(a.vehicleId).nr.localeCompare(veh(b.vehicleId).nr) || a.od.localeCompare(b.od))
@@ -1358,8 +1566,10 @@ function renderModal(){
   if(m.type==='veh') html = modalVeh(m);
   if(m.type==='notif') html = modalNotif();
   if(m.type==='addUnrep') html = modalAddUnrep();
+  if(m.type==='exportAll') html = modalExportAll();
   if(m.type==='account') html = modalAccount();
   host.innerHTML = `<div class="ov" data-a="ovClose"><div class="modal" role="dialog" aria-modal="true">${html}</div></div>`;
+  suppPrev('s'); suppPrev('u');
 }
 function modalDetail(m){
   const p = U.period, closed = isClosed(p), v = veh(m.v), u = userBy(m.u);
@@ -1436,15 +1646,15 @@ const ACC = {trip:'Zaakceptowany', fuel:'Zaakceptowane'}, REJ = {trip:'Odrzucony
 function exportXlsx(){
   if(!window.XLSX){ toast('Nie wczytano biblioteki do eksportu. Sprawdź połączenie i odśwież stronę.', true); return; }
   const p = U.period, closed = isClosed(p), rows = rowsFor(p);
-  const z = [['Okres','Użytkownik','Samochód','Model','Spółka','Licznik początkowy','Licznik końcowy','Stan licznika na koniec miesiąca','Km prywatne','Udział prywatny (%)','Norma l/100 km','Litry należne','Litry zatankowane','Saldo przeniesione','Saldo końcowe','Status']];
-  rows.forEach(r => { const v = veh(r.vehicleId); z.push([p, userBy(r.userId).name, v.nr, v.model, v.spolka, r.licznikStart, r.licznikEnd, r.licznikMiesiac, r.km, (x => x==null ? '' : Math.round(x*1000)/10)(pairShare(r.userId, r.vehicleId, p, r.km)), r.norma, r.litryNalezne, r.litryZatankowane, r.saldoPrzen, r.saldoKon, closed?'Zamknięte':'Wstępne (okres otwarty)']); });
+  const z = [['Okres','Użytkownik','Samochód','Model','Spółka','Licznik początkowy','Licznik końcowy','Stan licznika na koniec miesiąca','Km prywatne','Udział prywatny (%)','Norma l/100 km','Litry należne','W tym za uzupełnienia (l)','Litry zatankowane','Saldo przeniesione','Saldo końcowe','Status']];
+  rows.forEach(r => { const v = veh(r.vehicleId); z.push([p, userBy(r.userId).name, v.nr, v.model, v.spolka, r.licznikStart, r.licznikEnd, r.licznikMiesiac, r.km, (x => x==null ? '' : Math.round(x*1000)/10)(pairShare(r.userId, r.vehicleId, p, r.km)), r.norma, r.litryNalezne, uzupL(r.userId, r.vehicleId, p, r.norma), r.litryZatankowane, r.saldoPrzen, r.saldoKon, closed?'Zamknięte':'Wstępne (okres otwarty)']); });
   const t = [['Data','Użytkownik','Samochód','Licznik start','Licznik koniec','Km','Trasa','Litry wg normy','Status','Wpis po terminie','Komentarz','Uzupełnienie rozliczającego']];
   S.trips.filter(x=>x.okres===p).sort((a,b)=>a.date.localeCompare(b.date)).forEach(x => { const v = veh(x.vehicleId); t.push([x.date, userBy(x.userId).name, v.nr, x.start, x.end, x.km, x.trasa, r2(x.km*v.norma/100), x.status, x.late?'tak':'', x.comment, x.manual?(x.source||'tak'):'']); });
   const f = [['Data','Użytkownik','Samochód','Litry','Paragon','Status','Wpis po terminie','Komentarz']];
   S.fuels.filter(x=>x.okres===p).sort((a,b)=>a.date.localeCompare(b.date)).forEach(x => f.push([x.date, userBy(x.userId).name, veh(x.vehicleId).nr, x.litry, x.manual?'uzupełnienie':(x.photo?'tak':'nie'), x.status, x.late?'tak':'', x.comment]));
   const wb = XLSX.utils.book_new();
   const add = (aoa, name, w) => { const ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = w.map(x=>({wch:x})); XLSX.utils.book_append_sheet(wb, ws, name); };
-  add(z, 'Zestawienie', [9,20,11,24,8,14,14,16,11,12,13,12,15,15,13,22]);
+  add(z, 'Zestawienie', [9,20,11,24,8,14,14,16,11,12,13,12,16,15,15,13,22]);
   add(t, 'Przejazdy', [11,20,11,12,12,8,34,13,14,14,30,24]);
   add(f, 'Tankowania', [11,20,11,8,9,14,14,30]);
   const ld = lastDay(p), o = [['Samochód','Model','Stan na dzień','Stan licznika (km)','Podał','Data podania']];
@@ -1488,11 +1698,7 @@ document.addEventListener('click', ev => {
     case 'undo': { const e = findEntry(el.dataset.k, el.dataset.id); e.status = PEN[el.dataset.k]; e.comment = ''; save(); render(); break; }
     case 'closeAsk': U.modal = {type:'close'}; renderModal(); break;
     case 'closeDo': {
-      const p = U.period, rows = rowsFor(p), now = today();
-      rows.forEach(r => S.settlements.push({okres:p, userId:r.userId, vehicleId:r.vehicleId, licznikStart:r.licznikStart, licznikEnd:r.licznikEnd, licznikMiesiac:r.licznikMiesiac, km:r.km, norma:r.norma, litryNalezne:r.litryNalezne, litryZatankowane:r.litryZatankowane, saldoPrzen:r.saldoPrzen, saldoKon:r.saldoKon, closedAt:now, closedBy:S.session}));
-      S.trips.forEach(x => { if(x.okres===p && x.status==='Zaakceptowany') x.status = 'Rozliczony'; });
-      S.fuels.forEach(x => { if(x.okres===p && x.status==='Zaakceptowane') x.status = 'Rozliczone'; });
-      S.closed.push(p); save(); U.modal = null; render(); toast('Okres zamknięty'); break;
+      closePeriodFn(U.period, S.session, today()); save(); U.modal = null; render(); toast('Okres zamknięty'); break;
     }
     case 'export': exportXlsx(); break;
     case 'exportReport': exportReport(); break;
@@ -1503,6 +1709,9 @@ document.addEventListener('click', ev => {
     case 'addUnrep': U.addVeh = null; U.addDate = null; U.modal = {type:'addUnrep'}; renderModal(); break;
     case 'addUnrepDo': addUnrep(); break;
     case 'exportUnrep': exportUnrep(); break;
+    case 'exportAllAsk': U.modal = {type:'exportAll'}; renderModal(); break;
+    case 'xpre': { const [f,t] = xPreset(el.dataset.k); $('#x-from').value = f; $('#x-to').value = t; break; }
+    case 'exportAllDo': exportAll(); break;
     case 'vdetail': U.modal = {type:'veh', v:el.dataset.veh}; U.supp = null; renderModal(); break;
     case 'supp': U.supp = el.dataset.k; renderModal(); { const f = document.querySelector('#modal .supp select, #modal .supp input'); if(f) f.focus(); } break;
     case 'suppCancel': U.supp = null; renderModal(); break;
@@ -1519,6 +1728,10 @@ document.addEventListener('click', ev => {
     case 'verNote': { const p = U.period, vid = U.modal.v; let x = verifFor(p, vid); if(!x){ x = {okres:p, vehicleId:vid, done:false, note:'', by:S.session, date:today()}; S.verif.push(x); } x.note = ($('#ver-note').value||'').trim(); save(); toast('Uwagi zapisane'); break; }
   }
 });
+document.addEventListener('input', ev => {
+  const id = ev.target.id || '';
+  if(/^(s|u)-(start|end|km)$/.test(id)) suppPrev(id[0]);
+});
 document.addEventListener('change', ev => {
   const id = ev.target.id, val = ev.target.value;
   if(id==='r-from' && val){ U.rfrom = val; render(); }
@@ -1526,7 +1739,7 @@ document.addEventListener('change', ev => {
   else if(id==='r-st'){ U.rst = val; render(); }
   else if(id==='u-veh' || id==='u-date'){ if(id==='u-veh') U.addVeh = val; else if(val) U.addDate = val;
     const keep = ['u-start','u-end','u-km','u-trasa','u-src'].map(k => [k, $('#'+k) ? $('#'+k).value : '']);
-    renderModal(); keep.forEach(([k,v]) => { if($('#'+k)) $('#'+k).value = v; }); }
+    renderModal(); keep.forEach(([k,v]) => { if($('#'+k)) $('#'+k).value = v; }); suppPrev('u'); }
 });
 document.addEventListener('keydown', ev => {
   if(ev.key==='Escape' && U.modal){ U.modal = null; U.rejecting = null; renderModal(); }
@@ -1534,7 +1747,7 @@ document.addEventListener('keydown', ev => {
 });
 
 /* ---------- PWA ---------- */
-const APP_VERSION = '0.2';
+const APP_VERSION = '0.6';
 async function saveFile({filename, data}){
   const blob = data instanceof Blob ? data : new Blob([data]);
   const file = new File([blob], filename, {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
@@ -1580,6 +1793,7 @@ document.addEventListener('click', async ev => {
 
 (function init(){
   try{ const t = localStorage.getItem(KEY+'-theme'); if(t && t!=='auto') document.documentElement.setAttribute('data-theme', t); }catch(e){}
+  S = load();
   if(S.session && !userBy(S.session)) S.session = null;
   render();
   if(navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
