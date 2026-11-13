@@ -1,4 +1,4 @@
-# ALBA – Przejazdy prywatne (prototyp PWA, wersja 0.6)
+# ALBA – Przejazdy prywatne (prototyp PWA, wersja 0.8)
 
 Prototyp aplikacji do zgłaszania przejazdów prywatnych samochodem służbowym
 i rozliczania paliwa według normy. Działa na Androidzie i iOS, instaluje się
@@ -59,7 +59,7 @@ Po aktualizacji z wersji 0.3 lub starszej dane testowe zastępowane są jednoraz
    ze zdjęciem paragonu z aparatu, podaj stan licznika na koniec miesiąca.
 2. Przełącz konto (menu pod inicjałami) na Ewę Zając (rozliczająca): zaakceptuj lub odrzuć
    wpisy, sprawdź raport pojazdów i ranking niezgłoszonych przejazdów, pobierz „Raport zbiorczy (Excel)”
-   (jeden plik z 10 arkuszami; na telefonie otworzy się menu udostępniania: Poczta, Teams, OneDrive, Pliki).
+   (jeden plik z 11 arkuszami; na telefonie otworzy się menu udostępniania: Poczta, Teams, OneDrive, Pliki).
 3. Włącz tryb samolotowy i sprawdź, że aplikacja nadal działa.
 
 ## Ograniczenia prototypu
