@@ -172,6 +172,11 @@ textarea{min-height:70px;resize:vertical}
 .tabs{display:flex;align-items:center;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px;overflow-x:auto}
 .tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:10px 12px;font-weight:700;color:var(--text2);cursor:pointer;white-space:nowrap}
 .tabs button[aria-selected="true"]{color:var(--text);border-color:var(--cyan)}
+.tabs button.btn{flex:none;border:1px solid transparent;border-radius:8px;padding:6px 14px;min-height:36px;font-size:13px}
+.tabs button.btn-primary{background:var(--navy);color:#fff}
+.tabs button.btn-primary:hover{filter:brightness(1.15)}
+:root[data-theme="dark"] .tabs button.btn-primary{background:var(--cyan)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tabs button.btn-primary{background:var(--cyan)}}
 .pbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .pnav{display:flex;align-items:center;gap:6px}
 .pnav button{width:40px;height:40px;border-radius:9px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:18px}
@@ -198,6 +203,17 @@ td{padding:10px;border-top:1px solid var(--line);vertical-align:middle;font-vari
 tbody tr:nth-child(even) td{background:var(--info-bg)}
 tbody tr.click{cursor:pointer}
 tbody tr.click:hover td{background:var(--chip)}
+tbody tr.pend td:first-child{box-shadow:inset 4px 0 0 var(--warn)}
+tbody tr.pend td{background:var(--warn-bg)!important}
+.pend-card{border-left:4px solid var(--warn);margin-bottom:18px}
+.pend-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.pend-head h2{margin:0}
+.pend-head .ent-acts{margin:0 0 0 auto}
+table input[type=checkbox]{width:18px;height:18px;accent-color:var(--cyan);cursor:pointer}
+.tabs .badge{margin-left:6px;vertical-align:1px}
+td.det{min-width:220px}
+td .thumb{margin-top:6px}
+.pend-card .thumb:not(.open) img{width:44px;height:44px}
 td .who{font-weight:700}
 .neg{color:var(--green);font-weight:700}
 .pos{color:#B87A00;font-weight:700}
@@ -974,7 +990,7 @@ function saveOdo(){
 
 /* ---------- rozliczający ---------- */
 function adminTabs(){
-  return `<div class="tabs" role="tablist"><button role="tab" data-a="go" data-v="admin" aria-selected="${U.view==='admin'}">Rozliczenie miesiąca</button><button role="tab" data-a="go" data-v="report" aria-selected="${U.view==='report'}">Raport pojazdów</button><button role="tab" data-a="go" data-v="unrep" aria-selected="${U.view==='unrep'}">Niezgłoszone przejazdy</button><button role="tab" data-a="go" data-v="dict" aria-selected="${U.view==='dict'}">Kartoteka pojazdów</button>${downloads ? `<button class="btn btn-primary btn-sm" data-a="exportAllAsk" style="margin:4px 0 4px auto;white-space:nowrap">${I.xls}Raport zbiorczy (Excel)</button>` : ''}</div>`;
+  return `<div class="tabs" role="tablist"><button role="tab" data-a="go" data-v="admin" aria-selected="${U.view==='admin'}">Rozliczenie miesiąca${(n => n ? `<span class="badge">${n}</span>` : '')(pendingAll().length)}</button><button role="tab" data-a="go" data-v="report" aria-selected="${U.view==='report'}">Raport pojazdów</button><button role="tab" data-a="go" data-v="unrep" aria-selected="${U.view==='unrep'}">Niezgłoszone przejazdy</button><button role="tab" data-a="go" data-v="dict" aria-selected="${U.view==='dict'}">Kartoteka pojazdów</button>${downloads ? `<button class="btn btn-primary btn-sm" data-a="exportAllAsk" style="margin:4px 0 4px auto;white-space:nowrap">${I.xls}Raport zbiorczy (Excel)</button>` : ''}</div>`;
 }
 function periodList(){
   const out = []; let p = FIRST_PERIOD;
@@ -1007,7 +1023,7 @@ function viewAdmin(){
   const table = rows.length ? `<div class="tbl-wrap"><table>
     <thead><tr><th>Użytkownik</th><th>Samochód</th><th>Nr boczny</th><th class="n">Licznik pocz.</th><th class="n">Licznik końc.</th><th class="n">Stan na koniec mies.</th><th class="n">Km prywatne</th><th class="n">Udział prywatny</th><th class="n">Należne (l)</th><th class="n">w tym za uzup. (l)</th><th class="n">Zatankowane (l)</th><th class="n">Przeniesione (l)</th><th class="n">Saldo (l)</th>${closed?'':'<th class="n">Do decyzji</th>'}</tr></thead>
     <tbody>${rows.map(r => { const v = veh(r.vehicleId);
-      return `<tr class="click" data-a="detail" data-u="${r.userId}" data-veh="${r.vehicleId}" tabindex="0"><td><span class="who">${esc(userBy(r.userId).name)}</span></td><td>${esc(v.nr)}<br><span class="muted small">${esc(v.model)}</span></td><td><b>${esc(v.boczny||'—')}</b></td>
+      return `<tr class="click${!closed && r.pending ? ' pend' : ''}" data-a="detail" data-u="${r.userId}" data-veh="${r.vehicleId}" tabindex="0"><td><span class="who">${esc(userBy(r.userId).name)}</span></td><td>${esc(v.nr)}<br><span class="muted small">${esc(v.model)}</span></td><td><b>${esc(v.boczny||'—')}</b></td>
       <td class="n">${fKm(r.licznikStart)}</td><td class="n">${fKm(r.licznikEnd)}</td><td class="n">${r.licznikMiesiac!=null ? fKm(r.licznikMiesiac) : (!closed && expectedReadings(p).some(x=>x.u===r.userId && x.v===r.vehicleId) ? '<span class="badge">brak</span>' : '—')}</td><td class="n">${fKm(r.km)}</td><td class="n">${fPct(pairShare(r.userId, r.vehicleId, p, r.km))}</td><td class="n">${fL(r.litryNalezne)}</td><td class="n">${(x => x ? '<b>'+fL(x)+'</b>' : '—')(uzupL(r.userId, r.vehicleId, p, r.norma))}</td><td class="n">${fL(r.litryZatankowane)}</td><td class="n">${fL(r.saldoPrzen)}</td>
       <td class="n ${r.saldoKon>0.004?'pos':(r.saldoKon<-0.004?'neg':'')}">${fL(r.saldoKon)}</td>${closed?'':`<td class="n">${r.pending?`<span class="badge">${r.pending}</span>`:'—'}</td>`}</tr>`; }).join('')}</tbody></table></div>
     <div class="note">${closed ? 'Dane zamrożone w chwili zamknięcia okresu.' : 'Liczone wyłącznie z zaakceptowanych wpisów. Saldo dodatnie to litry do zatankowania przez użytkownika, ujemne to nadwyżka przechodząca na kolejny miesiąc.'} Udział prywatny to km prywatne wobec przebiegu samochodu w miesiącu; nie jest liczony, gdy w miesiącu jeździło nim kilka osób albo brakuje stanu licznika. Kliknij wiersz, aby zobaczyć wpisy.</div>`
@@ -1026,6 +1042,7 @@ function viewAdmin(){
     </div>
     ${odoInfo(p, closed)}
     ${!closed && !canClose ? `<div class="msg info" style="margin-bottom:14px">Ten okres można zamknąć po zamknięciu ${pName(prevP(p))}.</div>` : ''}
+    ${closed ? '' : pendingSection(p)}
     ${table}
     `;
 }
@@ -1603,6 +1620,36 @@ function exportAll(){
     .catch(err => { if(err && err.code==='declined') return; toast('Nie udało się zapisać pliku.', true); });
 }
 
+/* ---------- wpisy do decyzji ---------- */
+function pendingAll(p){
+  const open = x => !isClosed(x.okres) && (!p || x.okres===p);
+  return S.trips.filter(t => t.status==='Zgłoszony' && open(t)).map(t => ({...t, kind:'trip'}))
+    .concat(S.fuels.filter(f => f.status==='Zgłoszone' && open(f)).map(f => ({...f, kind:'fuel'})))
+    .sort((a,b) => a.date.localeCompare(b.date) || userBy(a.userId).name.localeCompare(userBy(b.userId).name,'pl'));
+}
+function pendingSection(p){
+  const list = pendingAll(p);
+  if(!list.length) return `<div class="msg info" style="margin-bottom:14px">Wszystkie wpisy za ${pName(p)} mają decyzję.</div>`;
+  U.sel = U.sel || new Set();
+  const keys = list.map(e => e.kind+':'+e.id); [...U.sel].forEach(k => { if(!keys.includes(k)) U.sel.delete(k); });
+  const allSel = keys.every(k => U.sel.has(k));
+  const rows = list.map(e => { const v = veh(e.vehicleId), key = e.kind+':'+e.id;
+    const det = e.kind==='trip'
+      ? `<b>${esc(e.trasa)}</b><br><span class="muted small">licznik ${fKm(e.start)}–${fKm(e.end)}</span>`
+      : `<b>Tankowanie prywatne</b>${e.photo ? `<button class="thumb ${U.pexp===e.id?'open':''}" data-a="pexp" data-id="${e.id}" aria-label="Zdjęcie paragonu"><img src="${photoSrc(e)}" alt=""></button>` : ''}`;
+    const acts = U.prej===e.id
+      ? `<textarea id="prej-${e.id}" placeholder="Powód odrzucenia" style="min-width:200px"></textarea><div class="ent-acts"><button class="btn btn-ghost btn-sm" data-a="prejCancel">Anuluj</button><button class="btn btn-danger btn-sm" data-a="prejDo" data-k="${e.kind}" data-id="${e.id}">Odrzuć wpis</button></div>`
+      : `<div class="ent-acts" style="margin:0;flex-wrap:nowrap"><button class="btn btn-ok btn-sm" data-a="pacc" data-k="${e.kind}" data-id="${e.id}">Akceptuj</button><button class="btn btn-danger btn-sm" data-a="prej" data-id="${e.id}">Odrzuć</button></div>`;
+    return `<tr><td><input type="checkbox" class="psel" data-key="${key}" ${U.sel.has(key)?'checked':''} aria-label="Zaznacz wpis"></td>
+      <td>${fDate(e.date)}${e.late ? '<br><span class="pill p-late">po terminie</span>' : ''}</td><td><span class="who">${esc(userBy(e.userId).name)}</span></td>
+      <td>${esc(v.nr)}</td><td><b>${esc(v.boczny||'—')}</b></td><td>${e.kind==='trip' ? 'Przejazd' : 'Tankowanie'}</td><td class="det">${det}</td>
+      <td class="n">${e.kind==='trip' ? fKm(e.km) : '—'}</td><td class="n">${e.kind==='trip' ? fL(r2(e.km*v.norma/100)) : fL(e.litry)}</td><td>${acts}</td></tr>`; }).join('');
+  return `<div class="card pend-card"><div class="pend-head"><h2>Wpisy do decyzji</h2><span class="badge">${list.length}</span>
+      <div class="ent-acts"><button class="btn btn-ok btn-sm" data-a="paccSel" ${U.sel.size?'':'disabled'}>Akceptuj zaznaczone${U.sel.size?` (${U.sel.size})`:''}</button><button class="btn btn-ghost btn-sm" data-a="paccAll">Akceptuj wszystkie (${list.length})</button></div></div>
+    <div class="tbl-wrap"><table><thead><tr><th><input type="checkbox" class="pselall" ${allSel?'checked':''} aria-label="Zaznacz wszystkie"></th><th>Data</th><th>Użytkownik</th><th>Samochód</th><th>Nr boczny</th><th>Rodzaj</th><th>Szczegóły</th><th class="n">Km</th><th class="n">Litry</th><th>Decyzja</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="note">Litry przy przejeździe to paliwo należne według normy, przy tankowaniu to litry z paragonu. Wiersze z wpisami do decyzji są też wyróżnione w tabeli poniżej.</div></div>`;
+}
+
 function viewDict(){
   const pill = ([c,t]) => `<span class="pill ${c==='err'?'p-Odrzucony':(c==='warn'?'p-Zgłoszony':'p-Zaakceptowany')}">${esc(t)}</span>`;
   const holder = v => { if(v.typ==='pool') return v.opiekunId ? userBy(v.opiekunId).name+' (opiekun)' : '—'; const a = S.assignments.find(x => x.vehicleId===v.id && x.od<=today() && (!x.do || x.do>=today())); return a ? userBy(a.userId).name : '—'; };
@@ -1765,6 +1812,17 @@ document.addEventListener('click', ev => {
     case 'rejCancel': U.rejecting = null; renderModal(); break;
     case 'rejDo': { const t = $('#rej-'+el.dataset.id); const txt = t ? t.value.trim() : ''; if(!txt){ toast('Wpisz powód odrzucenia, aby użytkownik wiedział, co poprawić.', true); if(t) t.focus(); break; }
       const e = findEntry(el.dataset.k, el.dataset.id); e.status = REJ[el.dataset.k]; e.comment = txt; U.rejecting = null; save(); render(); toast('Wpis odrzucony'); break; }
+    case 'pacc': { const e = findEntry(el.dataset.k, el.dataset.id); e.status = ACC[el.dataset.k]; e.comment = ''; U.sel && U.sel.delete(el.dataset.k+':'+el.dataset.id); save(); render(); toast('Zaakceptowano'); break; }
+    case 'prej': U.prej = el.dataset.id; render(); setTimeout(() => { const t = $('#prej-'+el.dataset.id); if(t) t.focus(); }, 0); break;
+    case 'prejCancel': U.prej = null; render(); break;
+    case 'prejDo': { const t = $('#prej-'+el.dataset.id), txt = t ? t.value.trim() : '';
+      if(!txt){ toast('Wpisz powód odrzucenia, aby użytkownik wiedział, co poprawić.', true); if(t) t.focus(); break; }
+      const e = findEntry(el.dataset.k, el.dataset.id); e.status = REJ[el.dataset.k]; e.comment = txt; U.prej = null; save(); render(); toast('Wpis odrzucony'); break; }
+    case 'pexp': U.pexp = U.pexp===el.dataset.id ? null : el.dataset.id; render(); break;
+    case 'paccSel': case 'paccAll': {
+      const list = pendingAll(U.period), keys = a==='paccAll' ? list.map(e => e.kind+':'+e.id) : [...(U.sel||[])];
+      let n = 0; keys.forEach(k => { const [kind, id] = k.split(':'); const e = findEntry(kind, id); if(e && e.status===PEN[kind]){ e.status = ACC[kind]; e.comment = ''; n++; } });
+      U.sel = new Set(); save(); render(); toast(`Zaakceptowano wpisy: ${n}`); break; }
     case 'undo': { const e = findEntry(el.dataset.k, el.dataset.id); e.status = PEN[el.dataset.k]; e.comment = ''; save(); render(); break; }
     case 'closeAsk': U.modal = {type:'close'}; renderModal(); break;
     case 'closeDo': {
@@ -1803,6 +1861,8 @@ document.addEventListener('input', ev => {
   if(/^(s|u)-(start|end|km)$/.test(id)) suppPrev(id[0]);
 });
 document.addEventListener('change', ev => {
+  if(ev.target.classList.contains('psel')){ U.sel = U.sel || new Set(); ev.target.checked ? U.sel.add(ev.target.dataset.key) : U.sel.delete(ev.target.dataset.key); render(); return; }
+  if(ev.target.classList.contains('pselall')){ U.sel = new Set(ev.target.checked ? pendingAll(U.period).map(e => e.kind+':'+e.id) : []); render(); return; }
   const id = ev.target.id, val = ev.target.value;
   if(id==='r-from' && val){ U.rfrom = val; render(); }
   else if(id==='r-to' && val){ U.rto = val; render(); }
@@ -1817,7 +1877,7 @@ document.addEventListener('keydown', ev => {
 });
 
 /* ---------- PWA ---------- */
-const APP_VERSION = '0.8';
+const APP_VERSION = '0.10';
 async function saveFile({filename, data}){
   const blob = data instanceof Blob ? data : new Blob([data]);
   const file = new File([blob], filename, {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});

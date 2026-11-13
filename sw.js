@@ -1,6 +1,6 @@
 /* ALBA – Przejazdy prywatne: service worker
    Po każdej zmianie plików aplikacji podnieś numer wersji w CACHE. */
-const CACHE = 'alba-przejazdy-v0.8';
+const CACHE = 'alba-przejazdy-v0.10';
 const ASSETS = ['./', 'index.html', 'manifest.webmanifest', 'xlsx.full.min.js',
   'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 

@@ -1,4 +1,4 @@
-# ALBA – Przejazdy prywatne (prototyp PWA, wersja 0.8)
+# ALBA – Przejazdy prywatne (prototyp PWA, wersja 0.10)
 
 Prototyp aplikacji do zgłaszania przejazdów prywatnych samochodem służbowym
 i rozliczania paliwa według normy. Działa na Androidzie i iOS, instaluje się
